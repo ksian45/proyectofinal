@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 public class Proveedores {
     private int id_proveedor;
     private String proveedor, nit, direccion, telefono;
+    private Conexion cn;
     public Proveedores(){}
     public Proveedores(int id_proveedor, String proveedor, String nit, String direccion, String telefono) {
         this.id_proveedor = id_proveedor;
@@ -69,22 +70,17 @@ public class Proveedores {
         try{
             cn = new Conexion();
             cn.abrir_conexion();
-            String query = "SELECT e.id_estudiante as id,e.carne,e.nombres,e.apellidos,e.direccion,e.telefono,e.correo_electronico,e.fecha_nacimiento,s.sangre, e.id_tipo_sangre FROM estudiantes as e inner join tipos_sangre as s on e.id_tipo_sangre = s.id_tipo_sangre;";
+            String query = "SELECT proveedores.id_proveedor as id,proveedores.proveedor,proveedores.nit,proveedores.direccion,proveedores.telefono FROM db_supermercado.proveedores;";
             ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
-            String encabezado[] = {"id","carne","nombres","apellidos","direccion","telefono","correo_electronico","nacimiento","sangre","id_tipo_sangre"};
+            String encabezado[] = {"id","proveedor","nit","direccion","telefono"};
             tabla.setColumnIdentifiers(encabezado);
             String datos [] = new String[10];
             while (consulta.next()){
                 datos[0] = consulta.getString("id");
-                datos[1] = consulta.getString("carne");
-                datos[2] = consulta.getString("nombres");
-                datos[3] = consulta.getString("apellidos");
+                datos[0] = consulta.getString("proveedor");
+                datos[1] = consulta.getString("nit");
                 datos[4] = consulta.getString("direccion");
                 datos[5] = consulta.getString("telefono");
-                datos[6] = consulta.getString("correo_electronico");
-                datos[7] = consulta.getString("fecha_nacimiento");
-                datos[8] = consulta.getString("sangre");
-                datos[9] = consulta.getString("id_tipo_sangre");
                 tabla.addRow(datos);
                 
             }
