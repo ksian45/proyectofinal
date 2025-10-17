@@ -4,7 +4,8 @@
     Author     : guich
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%><!DOCTYPE html>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -14,27 +15,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
 
-    <style>
-        .main-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1030; width: 100%; }
-        .main-footer { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1030; padding-top: 10px; }
-        .content-wrapper { padding-top: 57px; margin-bottom: 55px; }
+    </head>
 
-        .sidebar > div > nav:first-of-type {
-            flex-grow: 1;
-        }
-
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            height: calc(100vh - 57px);
-            overflow-y: auto;
-        }
-
-        .sidebar > nav:last-of-type {
-            margin-top: auto;
-        }
-    </style>
-</head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
@@ -63,18 +45,18 @@
         </a>
 
         <div class="sidebar">
-            <nav class="mt-2">
-                <!-- Aqui debemos agregar el menu dinamico -->
+            
+            <nav class="mt-2" style="flex-grow: 1;">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <!-- Aqui debemos agregar los modulos dinamicos -->
                     </ul>
             </nav>
-            <!-- Aqui debemos agregar el menu dinamico para perfil -->
+            
             <nav class="mt-auto mb-2">
                 <ul class="nav nav-pills nav-sidebar flex-column">
                     <li class="nav-item"><hr class="bg-secondary mx-2 my-1"></li>
-
                     <li class="nav-item">
-                        <a href="#" class="nav-link bg-secondary">
+                        <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-user-cog"></i>
                             <p>
                                 Perfil
@@ -94,7 +76,7 @@
                                     <p>Cerrar Sesión</p>
                                 </a>
                             </li>
-                            </ul>
+                        </ul>
                     </li>
                 </ul>
             </nav>
@@ -109,11 +91,7 @@
                         <div class="card">
                             <div class="card-header"><h3 class="card-title">Contenido Principal</h3></div>
                             <div class="card-body">
-                                <p>Haz clic en "Perfil" en la parte inferior del menú lateral. Se desplegarán las opciones "Configuración" y "Cerrar Sesión".</p>
-                                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                                <p>Sigue haciendo scroll...</p>
-                                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                                <p>Fin del contenido.</p>
+                                Aqui ira contenido principal
                             </div>
                         </div>
                     </div>
@@ -123,7 +101,7 @@
     </div>
 
     <footer class="main-footer">
-        <strong>Copyright &copy; 2024 <a href="#">Mi Empresa</a>.</strong> Todos los derechos reservados.
+        <strong>Copyright &copy; 2025 <a href="#">Mi Empresa</a>.</strong> Todos los derechos reservados.
         <div class="float-right d-none d-sm-inline-block"><b>Versión</b> 1.0</div>
     </footer>
 </div>
