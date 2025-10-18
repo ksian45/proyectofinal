@@ -14,27 +14,43 @@ public class Conexion {
     public Connection conexionBD;
     private final String puerto = "3306";
     private final String bd = "db_supermercado";
-    private final String urlConexion = String.format("jdbc:mysql://http://server-university.mysql.database.azure.com:%s/%s?serverTimezone=UTC",puerto,bd);
-    private final String usuario="conexionbd";
-    private final String contra= "Admin123";
+    private final String urlConexion = String.format("jdbc:mysql://server-university.mysql.database.azure.com:%s/%s?serverTimezone=UTC", puerto, bd);
+    private final String usuario = "conexionbd";
+    private final String contra = "c0nect0r123***";
     private final String jdbc = "com.mysql.cj.jdbc.Driver";
-    
+
     public void abrir_conexion(){
-    try{
-        Class.forName(jdbc);
-        conexionBD = DriverManager.getConnection(urlConexion,usuario,contra);
-        System.out.println("Conexion Exitosa...");
-    }catch(ClassNotFoundException | SQLException ex){
+        try {
+            Class.forName(jdbc);
+            conexionBD = DriverManager.getConnection(urlConexion, usuario, contra);
+            System.out.println("Conexion Exitosa...");
+        } catch (ClassNotFoundException | SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
-    }
-    }
-    
-    public void cerrar_conexion(){
-        try{
-            conexionBD.close();
-        }catch(SQLException ex){
-         System.out.println("Error" + ex.getMessage());
         }
-    
+    }
+
+    public void cerrar_conexion(){
+        try {
+            if (conexionBD != null && !conexionBD.isClosed()) {
+                conexionBD.close();
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+
+    public void prueba_conexion(){
+        Conexion cn = new Conexion();
+        cn.abrir_conexion();
+        try {
+            if (cn.conexionBD != null && !cn.conexionBD.isClosed()) {
+                System.out.println("conexion exitosa");
+            } else {
+                System.out.println("conexion fallida");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+        cn.cerrar_conexion();
     }
 }
