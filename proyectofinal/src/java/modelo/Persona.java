@@ -69,5 +69,7 @@ public Persona (){}
         this.fecha_ingreso = fecha_ingreso;
     }
     
-    
+    public int agregar(){return 0;}
+    public int modificar(){return 0;}
+    public int eliminar(){return 0;}
 }
