@@ -4,6 +4,7 @@
  */
 package modelo;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
@@ -77,10 +78,10 @@ public class Proveedores {
             String datos [] = new String[10];
             while (consulta.next()){
                 datos[0] = consulta.getString("id");
-                datos[0] = consulta.getString("proveedor");
-                datos[1] = consulta.getString("nit");
-                datos[4] = consulta.getString("direccion");
-                datos[5] = consulta.getString("telefono");
+                datos[1] = consulta.getString("proveedor");
+                datos[2] = consulta.getString("nit");
+                datos[3] = consulta.getString("direccion");
+                datos[4] = consulta.getString("telefono");
                 tabla.addRow(datos);
                 
             }
@@ -89,5 +90,68 @@ public class Proveedores {
             System.out.println(ex.getMessage());
         }
         return tabla;
+    }
+    
+    public int agregar(){
+        int retorno = 0;
+        try{
+            cn = new Conexion();
+            PreparedStatement parametro;
+            String query="INSERT INTO proveedores (id_proveedor,proveedor,nit,direccion,telefono) VALUES (?,?,?,?,?)";
+            cn.abrir_conexion();
+            parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);
+            parametro.setInt(1, getId_proveedor());
+            parametro.setString(2, getProveedor());
+            parametro.setString(3, getNit());
+            parametro.setString(4, getDireccion());
+            parametro.setString(5, getTelefono());
+            
+            retorno = parametro.executeUpdate();
+            cn.cerrar_conexion();
+        }catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             retorno = 0;
+                }
+        return retorno;
+    }
+    
+    public int modificar(){
+        int retorno = 0;
+        try{
+            cn = new Conexion();
+            PreparedStatement parametro;
+            String query="UPDATE proveedores SET id_proveedor = ?, proveedor = ?, nit = ?, direccion = ?, telefono = ? WHERE id_proveedor = ?;";
+            cn.abrir_conexion();
+            parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);
+            parametro.setInt(1, getId_proveedor());
+            parametro.setString(2, getProveedor());
+            parametro.setString(3, getNit());
+            parametro.setString(4, getDireccion());
+            parametro.setString(5, getTelefono());
+            retorno = parametro.executeUpdate();
+            cn.cerrar_conexion();
+        }catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             retorno = 0;
+                }
+        return retorno;
+    }
+    
+    public int eliminar(){
+        int retorno = 0;
+        try{
+            cn = new Conexion();
+            PreparedStatement parametro;
+            String query="delete from proveedores where id_proveedor = ?;";
+            cn.abrir_conexion();
+            parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);            
+            parametro.setInt(1, getId_proveedor());
+            retorno = parametro.executeUpdate();
+            cn.cerrar_conexion();
+        }catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             retorno = 0;
+                }
+        return retorno;
     }
 }
