@@ -13,45 +13,46 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author UMG
  */
-public class Marcas {
-    private int id_marca = 0;
-    private String marca;
+public class Puestos {
+    private int id_puesto;
+    private String puesto;
     private Conexion cn;
-public Marcas(){}
-    
-    public Marcas(String marca) {
-        this.marca = marca;
+
+    public Puestos(){}
+    public Puestos(int id_puesto, String puesto) {
+        this.id_puesto = id_puesto;
+        this.puesto = puesto;
     }
 
-    public String getMarca() {
-        return marca;
+    public int getId_puesto() {
+        return id_puesto;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setId_puesto(int id_puesto) {
+        this.id_puesto = id_puesto;
     }
 
-    public int getId_marca() {
-        return id_marca;
+    public String getPuesto() {
+        return puesto;
     }
 
-    public void setId_marca(int id_marca) {
-        this.id_marca = id_marca;
+    public void setPuesto(String puesto) {
+        this.puesto = puesto;
     }
-    
-    public DefaultTableModel leer(){
+
+public DefaultTableModel leer(){
         DefaultTableModel tabla = new DefaultTableModel();
         try{
             cn = new Conexion();
             cn.abrir_conexion();
-            String query = "SELECT marcas.id_marca as id, marcas.marca FROM db_supermercado.marcas;";
+            String query = "SELECT Puestos.id_puesto as id, puestos.puesto FROM db_supermercado.puestos;";
             ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
-            String encabezado[] = {"id","marca"};
+            String encabezado[] = {"id","puesto"};
             tabla.setColumnIdentifiers(encabezado);
             String datos [] = new String[10];
             while (consulta.next()){
                 datos[0] = consulta.getString("id");
-                datos[1] = consulta.getString("marca");
+                datos[1] = consulta.getString("puesto");
                 tabla.addRow(datos);
                 
             }
@@ -67,11 +68,11 @@ public Marcas(){}
         try{
             cn = new Conexion();
             PreparedStatement parametro;
-            String query="INSERT INTO db_supermercado.marcas (id_marca, marca) VALUES (?,?);";
+            String query="INSERT INTO db_supermercado.puestos (id_puesto, puesto) VALUES (?,?);";
             cn.abrir_conexion();
             parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);
-            parametro.setInt(1, getId_marca());
-            parametro.setString(2, getMarca());
+            parametro.setInt(1, getId_puesto());
+            parametro.setString(2, getPuesto());
             
             retorno = parametro.executeUpdate();
             cn.cerrar_conexion();
@@ -87,11 +88,11 @@ public Marcas(){}
         try{
             cn = new Conexion();
             PreparedStatement parametro;
-            String query="UPDATE db_supermercado.marcas SET id_marca = ?, marca = ? WHERE id_marca = ?;";
+            String query="UPDATE db_supermercado.puestos SET id_puesto = ?, puesto = ? WHERE id_puesto = ?;";
             cn.abrir_conexion();
             parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);
-            parametro.setInt(1, getId_marca());
-            parametro.setString(2, getMarca());
+            parametro.setInt(1, getId_puesto());
+            parametro.setString(2, getPuesto());
             retorno = parametro.executeUpdate();
             cn.cerrar_conexion();
         }catch(SQLException ex){
@@ -106,10 +107,10 @@ public Marcas(){}
         try{
             cn = new Conexion();
             PreparedStatement parametro;
-            String query="delete from marcas where id_marca = ?;";
+            String query="delete from puestos where id_puesto = ?;";
             cn.abrir_conexion();
             parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);            
-            parametro.setInt(1, getId_marca());
+            parametro.setInt(1, getId_puesto());
             retorno = parametro.executeUpdate();
             cn.cerrar_conexion();
         }catch(SQLException ex){
@@ -118,4 +119,5 @@ public Marcas(){}
                 }
         return retorno;
     }
+
 }

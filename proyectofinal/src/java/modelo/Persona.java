@@ -10,15 +10,14 @@ package modelo;
  */
 abstract class Persona {
     private int id, genero;
-    private String nombres, apellidos, telefono, fecha_ingreso;
+    private String nombres, apellidos, telefono;
 public Persona (){}
-    public Persona(int id, int genero, String nombres, String apellidos, String telefono, String fecha_ingreso) {
+    public Persona(int id, int genero, String nombres, String apellidos, String telefono) {
         this.id = id;
         this.genero = genero;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.telefono = telefono;
-        this.fecha_ingreso = fecha_ingreso;
     }
 
     public int getId() {
@@ -59,14 +58,6 @@ public Persona (){}
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public String getFecha_ingreso() {
-        return fecha_ingreso;
-    }
-
-    public void setFecha_ingreso(String fecha_ingreso) {
-        this.fecha_ingreso = fecha_ingreso;
     }
     
     public int agregar(){return 0;}
