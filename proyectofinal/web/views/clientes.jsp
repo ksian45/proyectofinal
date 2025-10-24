@@ -3,7 +3,8 @@
     Created on : 16/10/2025, 8:54:22 p. m.
     Author     : guich
 --%>
-
+<%@page import="modelo.Clientes"%>
+<%@page import="javax.swing.table.DefaultTableModel" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -115,45 +116,32 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Carlos Alberto</td>
-                                                <td>Estrada Solórzano</td>
-                                                <td>1234567-8</td>
-                                                <td>Masculino</td>
-                                                <td>5858-4040</td>
-                                                <td>carlos.e@email.com</td>
-                                                <td>10/01/2024</td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>María Fernanda</td>
-                                                <td>González Roca</td>
-                                                <td>7654321-K</td>
-                                                <td>Femenino</td>
-                                                <td>3131-2020</td>
-                                                <td>maria.g@email.com</td>
-                                                <td>15/03/2024</td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Luis Fernando</td>
-                                                <td>Castillo Paz</td>
-                                                <td>CF</td>
-                                                <td>Masculino</td>
-                                                <td>4545-8080</td>
-                                                <td>luis.c@email.com</td>
-                                                <td>20/05/2024</td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                                </td>
-                                            </tr>
+                                            <% 
+                                            Clientes cliente = new Clientes();
+                                            DefaultTableModel tabla = new DefaultTableModel();
+                                            tabla = cliente.leer();
+                                            for(int t=0;t<tabla.getRowCount();t++){
+                                                out.println("<tr data-id="+ tabla.getValueAt(t, 0) + " >");
+                                 
+                                                out.println("<td>"+ tabla.getValueAt(t, 1) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 2) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 3) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 4) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 5) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 6) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 7) +"</td>");
+                                                out.println("<td class='text-center'>");
+                                                out.println("  <button type='button' class='btn btn-warning btn-sm'>");
+                                                out.println("    <i class='fas fa-edit'></i>");
+                                                out.println("  </button>");
+                                                out.println("  <button type='button' class='btn btn-danger btn-sm'>");
+                                                out.println("    <i class='fas fa-trash'></i>");
+                                                out.println("  </button>");
+                                                out.println("</td>");
+                                                out.println("</tr>");    
+                                             }
+                        
+                                             %>
                                         </tbody>
                                     </table>
                                 </div>
@@ -167,7 +155,7 @@
 
     <footer class="main-footer">
         <strong>Copyright &copy; 2025 <a href="#">Mi Empresa</a>.</strong> Todos los derechos reservados.
-        <div class="float-right d-none d-sm-inline-block"><b>Versión</b> 1.0</div>
+        <div class="float-right d-none d-sm-inline-block"><b>Versión</b> 0.1 </div>
     </footer>
 </div>
 

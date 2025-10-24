@@ -3,7 +3,8 @@
     Created on : 16/10/2025, 8:43:33 p. m.
     Author     : guich
 --%>
-
+<%@page import="modelo.Empleados"%>
+<%@page import="javax.swing.table.DefaultTableModel" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -116,54 +117,35 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Juan Carlos</td>
-                                                <td>Pérez Gómez</td>
-                                                <td>10a Calle 15-20 Zona 5</td>
-                                                <td>5555-1234</td>
-                                                <td>2345 67890 0101</td>
-                                                <td>Masculino</td>
-                                                <td>15/05/1990</td>
-                                                <td>Bodeguero</td>
-                                                <td>01/03/2020</td>
-                                                <td>01/03/2020</td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ana Lucía</td>
-                                                <td>Martínez López</td>
-                                                <td>Zona 1, Guatemala</td>
-                                                <td>4444-5678</td>
-                                                <td>3456 78901 0101</td>
-                                                <td>Femenino</td>
-                                                <td>20/08/1995</td>
-                                                <td>Cajera</td>
-                                                <td>15/07/2021</td>
-                                                <td>15/07/2021</td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Pedro Antonio</td>
-                                                <td>Ramírez Solís</td>
-                                                <td>Colonia El Milagro, Mixco</td>
-                                                <td>3333-9876</td>
-                                                <td>4567 89012 0101</td>
-                                                <td>Masculino</td>
-                                                <td>01/11/1988</td>
-                                                <td>Gerente de Tienda</td>
-                                                <td>10/01/2018</td>
-                                                <td>10/01/2018</td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                                </td>
-                                            </tr>
+                                            <% 
+                                            Empleados empleado = new Empleados();
+                                            DefaultTableModel tabla = new DefaultTableModel();
+                                            tabla = empleado.leer();
+                                            for(int t=0;t<tabla.getRowCount();t++){
+                                                out.println("<tr data-id="+ tabla.getValueAt(t, 0) +" data-idp="+ tabla.getValueAt(t, 9) +" >");
+                                 
+                                                out.println("<td>"+ tabla.getValueAt(t, 1) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 2) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 3) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 4) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 5) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 6) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 7) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 8) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 10) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 11) +"</td>");
+                                                out.println("<td class='text-center'>");
+                                                out.println("  <button type='button' class='btn btn-warning btn-sm'>");
+                                                out.println("    <i class='fas fa-edit'></i>");
+                                                out.println("  </button>");
+                                                out.println("  <button type='button' class='btn btn-danger btn-sm'>");
+                                                out.println("    <i class='fas fa-trash'></i>");
+                                                out.println("  </button>");
+                                                out.println("</td>");
+                                                out.println("</tr>");    
+                                             }
+                        
+                                             %>
                                         </tbody>
                                     </table>
                                 </div>
