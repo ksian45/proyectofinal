@@ -98,7 +98,7 @@
                                 <h3 class="card-title">Gestión de Clientes</h3>
                             </div>
                             <div class="card-body">
-                                <button class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Nuevo</button>
+                                <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalClientes"><i class="fas fa-plus"></i> Nuevo Cliente</button>
 
                                 <div class="table-responsive">
                                     <table id="tablaClientes" class="table table-bordered table-striped">
@@ -189,6 +189,7 @@
         });
     });
 </script>
-
+<!-- Llamada a los modals -->
+<jsp:include page="modalClientes.jsp" />
 </body>
 </html>

@@ -97,8 +97,7 @@
                                 <h3 class="card-title">Gestión de Empleados</h3>
                             </div>
                             <div class="card-body">
-                                <button class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Nuevo</button>
-
+                                <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalEmpleados"><i class="fas fa-plus"></i> Nuevo Empleado</button>
                                 <div class="table-responsive">
                                     <table id="tablaEmpleados" class="table table-bordered table-striped">
                                         <thead>
@@ -200,6 +199,7 @@
         });
     });
 </script>
-
+<!-- Llamada a los modals -->
+<jsp:include page="modalEmpleados.jsp" />
 </body>
 </html>

@@ -3,23 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/login.jsp</file>
-=======
-<<<<<<< HEAD
-            <file>file:/D:/Proyecto%20final%20Progra%20II/proyectofinal/src/java/modelo/Proveedores.java</file>
-            <file>file:/D:/Proyecto%20final%20Progra%20II/proyectofinal/src/java/modelo/main.java</file>
-            <file>file:/D:/Proyecto%20final%20Progra%20II/proyectofinal/src/java/modelo/Conexion.java</file>
-            <file>file:/D:/Proyecto%20final%20Progra%20II/proyectofinal/src/java/modelo/Marcas.java</file>
-            <file>file:/D:/Proyecto%20final%20Progra%20II/proyectofinal/src/java/modelo/Productos.java</file>
-            <file>file:/D:/Proyecto%20final%20Progra%20II/proyectofinal/src/java/modelo/Persona.java</file>
-=======
-            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/index.jsp</file>
+            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/proveedores.jsp</file>
+            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/ventas.jsp</file>
+            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/compras.jsp</file>
+            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/modalEmpleados.jsp</file>
             <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/empleados.jsp</file>
+            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/modalClientes.jsp</file>
             <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/clientes.jsp</file>
+            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/modalProductos.jsp</file>
             <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/productos.jsp</file>
->>>>>>> luisito
->>>>>>> origin
         </group>
     </open-files>
 </project-private>

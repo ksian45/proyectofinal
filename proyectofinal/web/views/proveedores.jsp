@@ -1,6 +1,6 @@
 <%-- 
-    Document   : productos
-    Created on : 16/10/2025, 9:09:04 p. m.
+    Document   : proveedores
+    Created on : 20/10/2025, 10:06:06 p. m.
     Author     : guich
 --%>
 
@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos | Supermercado</title>
+    <title>Proveedores | Supermercado</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
 
     <style>
-        #tablaProductos th, #tablaProductos td {
+        #tablaProveedores th, #tablaProveedores td {
             text-align: center;
             vertical-align: middle;
         }
@@ -54,7 +54,7 @@
         <div class="sidebar">
             <nav class="mt-2" style="flex-grow: 1;">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!--Aqui pondremos los modulos dinamicos-->
+                    <!-- Aqui se agregaran los modulos dinamicos -->
                     </ul>
             </nav>
             <nav class="mt-auto mb-2">
@@ -95,60 +95,48 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Gestión de Productos</h3>
+                                <h3 class="card-title">Gestión de Proveedores</h3>
                             </div>
                             <div class="card-body">
-                                <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalProductos"><i class="fas fa-plus"></i> Nuevo Producto</button>
+                                <button class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Nuevo Proveedor</button>
 
                                 <div class="table-responsive">
-                                    <table id="tablaProductos" class="table table-bordered table-striped">
+                                    <table id="tablaProveedores" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Producto</th>
-                                                <th>Marca</th>
-                                                <th>Descripción</th>
-                                                <th>Precio Costo</th>
-                                                <th>Precio Venta</th>
-                                                <th>Stock</th>
-                                                <th>Fecha Ingreso</th>
+                                                <th>Proveedor</th>
+                                                <th>NIT</th>
+                                                <th>Dirección</th>
+                                                <th>Teléfono</th>
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>Leche Entera 1L</td>
-                                                <td>Dos Pinos</td>
-                                                <td>Leche de vaca pasteurizada</td>
-                                                <td>Q 10.50</td>
-                                                <td>Q 12.00</td>
-                                                <td>150</td>
-                                                <td>01/10/2025</td>
+                                                <td>Distribuidora Central S.A.</td>
+                                                <td>9876543-2</td>
+                                                <td>Calz. Aguilar Batres 30-15 Zona 12</td>
+                                                <td>2424-8080</td>
                                                 <td>
                                                     <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
                                                     <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Pan de Molde Blanco</td>
-                                                <td>Bimbo</td>
-                                                <td>Pan blanco sin orillas, 567g</td>
-                                                <td>Q 18.00</td>
-                                                <td>Q 21.50</td>
-                                                <td>80</td>
-                                                <td>05/10/2025</td>
+                                                <td>Alimentos del Norte</td>
+                                                <td>1234567-8</td>
+                                                <td>Km. 15 Carretera al Atlántico</td>
+                                                <td>2222-3030</td>
                                                 <td>
                                                     <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
                                                     <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Café Instantáneo 200g</td>
-                                                <td>Nescafé</td>
-                                                <td>Café clásico instantáneo frasco grande</td>
-                                                <td>Q 35.75</td>
-                                                <td>Q 40.00</td>
-                                                <td>200</td>
-                                                <td>15/09/2025</td>
+                                                <td>Importadora La Confianza</td>
+                                                <td>4567890-1</td>
+                                                <td>12 Calle 5-50 Zona 1</td>
+                                                <td>2323-5050</td>
                                                 <td>
                                                     <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
                                                     <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
@@ -180,7 +168,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#tablaProductos').DataTable({
+        $('#tablaProveedores').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
             },
@@ -189,7 +177,6 @@
         });
     });
 </script>
-<!-- Llamada a los modals -->
-<jsp:include page="modalProductos.jsp" />
+
 </body>
 </html>
