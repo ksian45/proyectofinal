@@ -13,33 +13,17 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author UMG
  */
-public class Proveedores {
-    private int id_proveedor;
-    private String proveedor, nit, direccion, telefono;
+public class Clientes extends Persona{
+    private String nit, correo_electronico, fecha_ingreso;
     private Conexion cn;
-    public Proveedores(){}
-    public Proveedores(int id_proveedor, String proveedor, String nit, String direccion, String telefono) {
-        this.id_proveedor = id_proveedor;
-        this.proveedor = proveedor;
+
+    public Clientes(){}
+
+    public Clientes(int id, String nombres, String apellidos, String nit, int genero, String telefono, String correo_electronico, String fecha_ingreso) {
+        super(id, genero, nombres, apellidos, telefono);
         this.nit = nit;
-        this.direccion = direccion;
-        this.telefono = telefono;
-    }
-
-    public int getId_proveedor() {
-        return id_proveedor;
-    }
-
-    public void setId_proveedor(int id_proveedor) {
-        this.id_proveedor = id_proveedor;
-    }
-
-    public String getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(String proveedor) {
-        this.proveedor = proveedor;
+        this.correo_electronico = correo_electronico;
+        this.fecha_ingreso = fecha_ingreso;
     }
 
     public String getNit() {
@@ -50,38 +34,42 @@ public class Proveedores {
         this.nit = nit;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String getCorreo_electronico() {
+        return correo_electronico;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setCorreo_electronico(String correo_electronico) {
+        this.correo_electronico = correo_electronico;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getFecha_ingreso() {
+        return fecha_ingreso;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setFecha_ingreso(String fecha_ingreso) {
+        this.fecha_ingreso = fecha_ingreso;
     }
+    
     
     public DefaultTableModel leer(){
         DefaultTableModel tabla = new DefaultTableModel();
         try{
             cn = new Conexion();
             cn.abrir_conexion();
-            String query = "SELECT proveedores.id_proveedor as id,proveedores.proveedor,proveedores.nit,proveedores.direccion,proveedores.telefono FROM db_supermercado.proveedores;";
+            String query = "SELECT clientes.id_cliente as id, clientes.nombres, clientes.apellidos, clientes.nit, clientes.genero, clientes.telefono, clientes.correo_electronico, clientes.fecha_ingreso FROM db_supermercado.clientes;";
             ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
-            String encabezado[] = {"id","proveedor","nit","direccion","telefono"};
+            String encabezado[] = {"id","nombres","apellidos","nit","genero","telefono","correo_electronico","fecha_ingreso"};
             tabla.setColumnIdentifiers(encabezado);
-            String datos [] = new String[10];
+            String datos [] = new String[8];
             while (consulta.next()){
                 datos[0] = consulta.getString("id");
-                datos[1] = consulta.getString("proveedor");
-                datos[2] = consulta.getString("nit");
-                datos[3] = consulta.getString("direccion");
-                datos[4] = consulta.getString("telefono");
+                datos[1] = consulta.getString("nombres");
+                datos[2] = consulta.getString("apellidos");
+                datos[3] = consulta.getString("nit");
+                datos[4] = consulta.getString("genero");
+                datos[5] = consulta.getString("telefono");
+                datos[6] = consulta.getString("correo_electronico");
+                datos[7] = consulta.getString("fecha_ingreso");
                 tabla.addRow(datos);
                 
             }
@@ -91,20 +79,48 @@ public class Proveedores {
         }
         return tabla;
     }
-    
+        @Override
     public int agregar(){
         int retorno = 0;
         try{
             cn = new Conexion();
             PreparedStatement parametro;
-            String query="INSERT INTO proveedores (id_proveedor,proveedor,nit,direccion,telefono) VALUES (?,?,?,?,?)";
+            String query="INSERT INTO db_supermercado.clientes (nombres, apellidos, nit, genero, telefono, correo_electronico, fecha_ingreso) VALUES (?,?,?,?,?,?,?);";
             cn.abrir_conexion();
             parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);
-            parametro.setInt(1, getId_proveedor());
-            parametro.setString(2, getProveedor());
+            parametro.setString(1, getNombres());
+            parametro.setString(2, getApellidos());
             parametro.setString(3, getNit());
-            parametro.setString(4, getDireccion());
+            parametro.setInt(4, getGenero());
             parametro.setString(5, getTelefono());
+            parametro.setString(6, getCorreo_electronico());
+            parametro.setString(7, getFecha_ingreso());
+            
+            retorno = parametro.executeUpdate();
+            cn.cerrar_conexion();
+        }catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             retorno = 0;
+                }
+        return retorno;
+    }
+    @Override
+    public int modificar(){
+        int retorno = 0;
+        try{
+            cn = new Conexion();
+            PreparedStatement parametro;
+            String query="UPDATE db_supermercado.clientes SET nombres = ?, apellidos = ?, nit = ?, genero = ?, telefono = ?, correo_electronico = ?, fecha_ingreso = ? WHERE id_cliente = ?;";
+            cn.abrir_conexion();
+            parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);
+            parametro.setString(1, getNombres());
+            parametro.setString(2, getApellidos());
+            parametro.setString(3, getNit());
+            parametro.setInt(4, getGenero());
+            parametro.setString(5, getTelefono());
+            parametro.setString(6, getCorreo_electronico());
+            parametro.setString(7, getFecha_ingreso());
+            parametro.setInt(8, getId());
             
             retorno = parametro.executeUpdate();
             cn.cerrar_conexion();
@@ -115,19 +131,16 @@ public class Proveedores {
         return retorno;
     }
     
-    public int modificar(){
+    @Override
+    public int eliminar(){
         int retorno = 0;
         try{
             cn = new Conexion();
             PreparedStatement parametro;
-            String query="UPDATE proveedores SET id_proveedor = ?, proveedor = ?, nit = ?, direccion = ?, telefono = ? WHERE id_proveedor = ?;";
+            String query="delete from clientes where id_cliente = ?;";
             cn.abrir_conexion();
-            parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);
-            parametro.setInt(1, getId_proveedor());
-            parametro.setString(2, getProveedor());
-            parametro.setString(3, getNit());
-            parametro.setString(4, getDireccion());
-            parametro.setString(5, getTelefono());
+            parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);            
+            parametro.setInt(1, getId());
             retorno = parametro.executeUpdate();
             cn.cerrar_conexion();
         }catch(SQLException ex){
@@ -137,21 +150,4 @@ public class Proveedores {
         return retorno;
     }
     
-    public int eliminar(){
-        int retorno = 0;
-        try{
-            cn = new Conexion();
-            PreparedStatement parametro;
-            String query="delete from proveedores where id_proveedor = ?;";
-            cn.abrir_conexion();
-            parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);            
-            parametro.setInt(1, getId_proveedor());
-            retorno = parametro.executeUpdate();
-            cn.cerrar_conexion();
-        }catch(SQLException ex){
-             System.out.println(ex.getMessage());
-             retorno = 0;
-                }
-        return retorno;
-    }
 }
