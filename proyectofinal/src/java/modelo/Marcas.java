@@ -14,15 +14,17 @@ import javax.swing.table.DefaultTableModel;
  * @author UMG
  */
 public class Marcas {
-    private int id_marca = 0;
-    private String marca;
+    private int id_marca;
+    private String marca, imagen;
     private Conexion cn;
 public Marcas(){}
-    
-    public Marcas(String marca) {
-        this.marca = marca;
-    }
 
+    public Marcas(int id_marca, String marca, String imagen) {
+        this.id_marca = id_marca;
+        this.marca = marca;
+        this.imagen = imagen;
+    }
+    
     public String getMarca() {
         return marca;
     }
@@ -37,6 +39,14 @@ public Marcas(){}
 
     public void setId_marca(int id_marca) {
         this.id_marca = id_marca;
+    }
+    
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
     
     public DefaultTableModel leer(){
@@ -118,4 +128,5 @@ public Marcas(){}
                 }
         return retorno;
     }
+
 }

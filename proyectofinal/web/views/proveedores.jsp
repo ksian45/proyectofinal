@@ -3,7 +3,8 @@
     Created on : 20/10/2025, 10:06:06 p. m.
     Author     : guich
 --%>
-
+<%@page import="modelo.Proveedores"%>
+<%@page import="javax.swing.table.DefaultTableModel" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -112,36 +113,29 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Distribuidora Central S.A.</td>
-                                                <td>9876543-2</td>
-                                                <td>Calz. Aguilar Batres 30-15 Zona 12</td>
-                                                <td>2424-8080</td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Alimentos del Norte</td>
-                                                <td>1234567-8</td>
-                                                <td>Km. 15 Carretera al Atlántico</td>
-                                                <td>2222-3030</td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Importadora La Confianza</td>
-                                                <td>4567890-1</td>
-                                                <td>12 Calle 5-50 Zona 1</td>
-                                                <td>2323-5050</td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                                </td>
-                                            </tr>
+                                            <% 
+                                            Proveedores proveedor = new Proveedores();
+                                            DefaultTableModel tabla = new DefaultTableModel();
+                                            tabla = proveedor.leer();
+                                            for(int t=0;t<tabla.getRowCount();t++){
+                                                out.println("<tr data-id="+ tabla.getValueAt(t, 0) + ">");
+                                 
+                                                out.println("<td>"+ tabla.getValueAt(t, 1) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 2) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 3) +"</td>");
+                                                out.println("<td>"+ tabla.getValueAt(t, 4) +"</td>");
+                                                out.println("<td class='text-center'>");
+                                                out.println("  <button type='button' class='btn btn-warning btn-sm'>");
+                                                out.println("    <i class='fas fa-edit'></i>");
+                                                out.println("  </button>");
+                                                out.println("  <button type='button' class='btn btn-danger btn-sm'>");
+                                                out.println("    <i class='fas fa-trash'></i>");
+                                                out.println("  </button>");
+                                                out.println("</td>");
+                                                out.println("</tr>");    
+                                             }
+                        
+                                             %>
                                         </tbody>
                                     </table>
                                 </div>
