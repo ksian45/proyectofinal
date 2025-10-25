@@ -17,11 +17,11 @@
 
     <style>
         .puesto-img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
-            border-radius: 50%; /* Forma circular */
-            margin: 0 auto 15px auto; /* Centra y da margen inferior */
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover; 
+            margin: 0 auto 15px auto; 
             display: block;
             border: 3px solid #dee2e6;
         }
@@ -98,7 +98,7 @@
                         <h3 class="card-title">Gestión de Puestos</h3>
                     </div>
                     <div class="card-body">
-                        <button class="btn btn-primary mb-4"><i class="fas fa-plus"></i> Nuevo Puesto</button>
+                        <button class="btn btn-primary mb-4" data-toggle="modal" data-target="#modalPuestos"><i class="fas fa-plus"></i> Nuevo Puesto</button>
 
                         <div class="row">
                             
@@ -173,6 +173,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
-
+<!-- Llamada a los modals -->
+<jsp:include page="modalPuestos.jsp" />
 </body>
 </html>

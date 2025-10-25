@@ -17,12 +17,19 @@
 
     <style>
         .marca-img {
-            width: 100%;
-            height: 100px;
-            object-fit: contain; /* 'contain' es mejor para logos, evita que se corten */
+            /* Fija una altura máxima para todos los logos */
+            max-height: 100px; 
+
+            /* El ancho se ajustará automáticamente para mantener la proporción */
+            width: auto;      
+
+            /* Esto evita que un logo súper ancho rompa la tarjeta */
+            max-width: 100%;   
+
+            object-fit: contain;
             margin: 0 auto 15px auto;
             display: block;
-        }
+    }
     </style>
 </head>
 
@@ -96,7 +103,7 @@
                         <h3 class="card-title">Gestión de Marcas</h3>
                     </div>
                     <div class="card-body">
-                        <button class="btn btn-primary mb-4"><i class="fas fa-plus"></i> Nueva Marca</button>
+                        <button class="btn btn-primary mb-4" data-toggle="modal" data-target="#modalMarcas" ><i class="fas fa-plus"></i> Nueva Marca</button>
 
                         <div class="row">
                             
@@ -171,6 +178,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
-
+<!-- Llamada a los modals -->
+<jsp:include page="modalMarcas.jsp" />
 </body>
 </html>
