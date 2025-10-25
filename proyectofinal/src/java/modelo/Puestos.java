@@ -15,13 +15,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Puestos {
     private int id_puesto;
-    private String puesto;
+    private String puesto, imagen;
     private Conexion cn;
 
     public Puestos(){}
-    public Puestos(int id_puesto, String puesto) {
+    public Puestos(int id_puesto, String puesto, String imagen) {
         this.id_puesto = id_puesto;
         this.puesto = puesto;
+        this.imagen = imagen;
     }
 
     public int getId_puesto() {
@@ -40,6 +41,14 @@ public class Puestos {
         this.puesto = puesto;
     }
 
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+    
 public DefaultTableModel leer(){
         DefaultTableModel tabla = new DefaultTableModel();
         try{
