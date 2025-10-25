@@ -56,7 +56,7 @@ public class Clientes extends Persona{
         try{
             cn = new Conexion();
             cn.abrir_conexion();
-            String query = "SELECT clientes.id_cliente as id, clientes.nombres, clientes.apellidos, clientes.nit, clientes.genero, clientes.telefono, clientes.correo_electronico, clientes.fecha_ingreso FROM db_supermercado.clientes;";
+            String query = "SELECT clientes.id_cliente as id, clientes.nombres, clientes.apellidos, clientes.nit, CASE WHEN clientes.genero = 0 THEN 'Masculino' WHEN clientes.genero = 1 THEN 'Femenino' END as genero, clientes.telefono, clientes.correo_electronico, clientes.fecha_ingreso FROM db_supermercado.clientes;";
             ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
             String encabezado[] = {"id","nombres","apellidos","nit","genero","telefono","correo_electronico","fecha_ingreso"};
             tabla.setColumnIdentifiers(encabezado);

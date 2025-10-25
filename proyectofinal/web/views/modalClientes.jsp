@@ -62,8 +62,8 @@
                             <label for="genero" class="form-label">Género</label>
                             <select class="form-control" id="genero" name="genero" required>
                                 <option value="" selected disabled>Seleccione un género...</option>
-                                <option value="Masculino">Masculino</option>
-                                <option value="Femenino">Femenino</option>
+                                <option value="0">Masculino</option>
+                                <option value="1">Femenino</option>
                             </select>
                             <div class="invalid-feedback">
                                 Por favor, seleccione un género.
