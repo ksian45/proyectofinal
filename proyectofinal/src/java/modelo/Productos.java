@@ -108,7 +108,7 @@ public class Productos {
         try{
             cn = new Conexion();
             cn.abrir_conexion();
-            String query = "SELECT productos.id_producto as id, productos.producto, productos.id_marca, productos.descripcion, productos.imagen, productos.precio_costo, productos.precio_venta, productos.existencia, productos.fecha_ingreso FROM db_supermercado.productos;";
+            String query = "SELECT p.id_producto as id, p.producto, m.marca, p.descripcion, p.imagen, p.precio_costo, p.precio_venta, p.existencia, p.fecha_ingreso FROM db_supermercado.productos p INNER JOIN db_supermercado.marcas m ON p.id_marca = m.id_marca;";
             ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
             String encabezado[] = {"id","producto","id_marca","descripcion","imagen","precio_costo","precio_venta","existencia","fecha_ingreso",};
             tabla.setColumnIdentifiers(encabezado);
@@ -116,7 +116,7 @@ public class Productos {
             while (consulta.next()){
                 datos[0] = consulta.getString("id");
                 datos[1] = consulta.getString("producto");
-                datos[2] = consulta.getString("id_marca");
+                datos[2] = consulta.getString("marca");
                 datos[3] = consulta.getString("descripcion");
                 datos[4] = consulta.getString("imagen");
                 datos[5] = consulta.getString("precio_costo");

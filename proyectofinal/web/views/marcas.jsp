@@ -3,7 +3,8 @@
     Created on : 16/10/2025, 10:55:12 p. m.
     Author     : guich
 --%>
-
+<%@page import="modelo.Marcas"%>
+<%@page import="javax.swing.table.DefaultTableModel" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -106,62 +107,43 @@
                         <button class="btn btn-primary mb-4" data-toggle="modal" data-target="#modalMarcas" ><i class="fas fa-plus"></i> Nueva Marca</button>
 
                         <div class="row">
-                            
-                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                                <div class="card text-center h-100">
-                                    <div class="card-body d-flex flex-column">
-                                        <img src="..\images\Logo_Dos_Pinos.png" alt="Logo de la Marca" class="marca-img">
-                                        
-                                        <h5 class="card-title font-weight-bold">Dos Pinos</h5>
-                                        <div class="mt-auto"> <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <%
+                                // Asume que tu clase Marcas y método leer() existen
+                                Marcas marca = new Marcas();
+                                DefaultTableModel tabla = marca.leer();
 
-                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                                <div class="card text-center h-100">
-                                    <div class="card-body d-flex flex-column">
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Logo_Grupo_BIMBO.svg/2560px-Logo_Grupo_BIMBO.svg.png" alt="Logo de la Marca" class="marca-img">
-                                        
-                                        <h5 class="card-title font-weight-bold">Bimbo</h5>
-                                        <div class="mt-auto">
-                                            <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                // Bucle para generar cada tarjeta de marca
+                                for(int t=0; t < tabla.getRowCount(); t++){
+                                    String id_marca = tabla.getValueAt(t, 0).toString();
+                                    String marcas = tabla.getValueAt(t, 1).toString();
+                                    String imagen = tabla.getValueAt(t, 2).toString();
 
-                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                                <div class="card text-center h-100">
-                                    <div class="card-body d-flex flex-column">
-                                        <img src="https://1000marcas.net/wp-content/uploads/2020/01/Logo.-Nescafe.png" alt="Logo de la Marca" class="marca-img ">
-                                        
-                                        <h5 class="card-title font-weight-bold">Nescafé</h5>
-                                        <div class="mt-auto">
-                                            <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                                <div class="card text-center h-100">
-                                    <div class="card-body d-flex flex-column">
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Logo_de_Grupo_Lala.svg" alt="Logo de la Marca" class="marca-img ">
-                                        
-                                        <h5 class="card-title font-weight-bold">Lala</h5>
-                                        <div class="mt-auto">
-                                            <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    out.println("<div class='col-lg-3 col-md-4 col-sm-6 mb-4'>");
+                                    out.println("  <div class='card text-center h-100'>");
+                                    out.println("    <div class='card-body d-flex flex-column'>");
 
+                                    // Imagen (Logo)
+                                    out.println("      <img src='" + tabla.getValueAt(t, 2) + "' alt='Logo de " + tabla.getValueAt(t, 1) + "' class='marca-img bg-light'>");
+
+                                    // Nombre de la Marca
+                                    out.println("      <h5 class='card-title font-weight-bold'>" + tabla.getValueAt(t, 1) + "</h5>");
+
+                                    // Botones de Acciones
+                                    out.println("      <div class='mt-auto'>");
+                                    out.println("        <button type='button' class='btn btn-warning btn-sm btn-editar-marca' data-id='" + tabla.getValueAt(t, 0) + "'>");
+                                    out.println("          <i class='fas fa-edit'></i>");
+                                    out.println("        </button>");
+                                    out.println("        <button type='button' class='btn btn-danger btn-sm btn-eliminar-marca' data-id='" + tabla.getValueAt(t, 0) + "'>");
+                                    out.println("          <i class='fas fa-trash'></i>");
+                                    out.println("        </button>");
+                                    out.println("      </div>"); 
+
+                                    out.println("    </div>"); 
+                                    out.println("  </div>"); 
+                                    out.println("</div>"); 
+
+                                } 
+                            %>
                         </div>
                     </div>
                 </div>

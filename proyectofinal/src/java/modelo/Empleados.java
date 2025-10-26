@@ -14,13 +14,13 @@ import javax.swing.table.DefaultTableModel;
  * @author UMG
  */
 public class Empleados extends Persona{
-    private String direccion, fecha_nacimiento, fecha_inicio_labores, fecha_ingreso;
-    private int id_puesto, dpi;
+    private String direccion,dpi, fecha_nacimiento, fecha_inicio_labores, fecha_ingreso;
+    private int id_puesto;
     private Conexion cn;
 
     public Empleados(){}
 
-    public Empleados(int id, String nombres, String apellidos, String direccion, String telefono, int dpi, int genero, String fecha_nacimiento, int id_puesto, String fecha_inicio_labores, String fecha_ingreso) {
+    public Empleados(int id, String nombres, String apellidos, String direccion, String telefono, String dpi, int genero, String fecha_nacimiento, int id_puesto, String fecha_inicio_labores, String fecha_ingreso) {
         super(id, genero, nombres, apellidos, telefono);
         this.direccion = direccion;
         this.fecha_nacimiento = fecha_nacimiento;
@@ -62,11 +62,11 @@ public class Empleados extends Persona{
         this.id_puesto = id_puesto;
     }
 
-    public int getDpi() {
+    public String getDpi() {
         return dpi;
     }
 
-    public void setDpi(int dpi) {
+    public void setDpi(String dpi) {
         this.dpi = dpi;
     } 
     
@@ -124,7 +124,7 @@ public class Empleados extends Persona{
             parametro.setString(2, getApellidos());
             parametro.setString(3, getDireccion());
             parametro.setString(4, getTelefono());
-            parametro.setInt(5, getDpi());
+            parametro.setString(5, getDpi());
             parametro.setInt(6, getGenero());
             parametro.setString(7, getFecha_nacimiento());
             parametro.setInt(8, getId_puesto());
@@ -145,27 +145,29 @@ public class Empleados extends Persona{
         try{
             cn = new Conexion();
             PreparedStatement parametro;
-            String query="UPDATE db_supermercado.empleados SET id_empleado = ?, nombres = ?, apellidos = ?, direccion = ?, telefono = ?, dpi = ?, genero = ?, fecha_nacimiento =?, id_puesto = ?, fecha_inicio_labores = ?, fecha_ingreso = ? WHERE id_empleado = ?;";
+
+            String query="UPDATE db_supermercado.empleados SET nombres = ?, apellidos = ?, direccion = ?, telefono = ?, dpi = ?, genero = ?, fecha_nacimiento =?, id_puesto = ?, fecha_inicio_labores = ? WHERE id_empleado = ?;";
+
             cn.abrir_conexion();
             parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);
+
             parametro.setString(1, getNombres());
             parametro.setString(2, getApellidos());
             parametro.setString(3, getDireccion());
             parametro.setString(4, getTelefono());
-            parametro.setInt(5, getDpi());
+            parametro.setString(5, getDpi());
             parametro.setInt(6, getGenero());
             parametro.setString(7, getFecha_nacimiento());
             parametro.setInt(8, getId_puesto());
-            parametro.setString(9, getFecha_inicio_labores());
-            parametro.setString(10, getFecha_ingreso());
-            parametro.setInt(11, getId());
-            
+            parametro.setString(9, getFecha_inicio_labores()); 
+            parametro.setInt(10, getId()); 
+
             retorno = parametro.executeUpdate();
             cn.cerrar_conexion();
         }catch(SQLException ex){
-             System.out.println(ex.getMessage());
+             System.out.println("Error en modificar(): " + ex.getMessage());
              retorno = 0;
-                }
+        }
         return retorno;
     }
     

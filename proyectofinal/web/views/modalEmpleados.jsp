@@ -3,12 +3,14 @@
     Created on : 22/10/2025, 11:44:28 p. m.
     Author     : guich
 --%>
+<%@page import="modelo.Puestos" %>
+<%@page  import="java.util.HashMap" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="modal fade" id="modalEmpleados" tabindex="-1" aria-labelledby="modalEmpleadosLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
 
-            <form id="formEmpleados" class="needs-validation" novalidate>
+            <form action="<%= request.getContextPath() %>/sr_empleado" method="post" id="formEmpleados" class="needs-validation" novalidate>
                 
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalEmpleadosLabel">Nuevo Empleado</h5>
@@ -73,8 +75,8 @@
                             <label for="genero" class="form-label">Género</label>
                             <select class="form-control" id="genero" name="genero" required>
                                 <option value="" selected disabled>Seleccione un género...</option>
-                                <option value="Masculino">Masculino</option>
-                                <option value="Femenino">Femenino</option>
+                                <option value="0">Masculino</option>
+                                <option value="1">Femenino</option>
                             </select>
                             <div class="invalid-feedback">
                                 Por favor, seleccione un género.
@@ -95,9 +97,14 @@
                             <label for="puesto" class="form-label">Puesto</label>
                             <select class="form-control" id="puesto" name="puesto" required>
                                 <option value="" selected disabled>Seleccione un puesto...</option>
-                                <option value="1">Bodeguero</option>
-                                <option value="2">Cajero</option>
-                                <option value="3">Gerente de Tienda</option>
+                                <%
+                                    Puestos puesto = new Puestos();
+                                    HashMap<String,String> drop = puesto.leer_puesto();
+                                    for(String i:drop.keySet()){
+                                      out.println("<option value='"+ i +"'>"+ drop.get(i)+"</option>");
+                                      }
+
+                                %>
                             </select>
                             <div class="invalid-feedback">
                                 Por favor, seleccione un puesto.
@@ -125,22 +132,17 @@
 </div>
 
 <script>
-// Ejemplo de cómo activar la validación con JavaScript
 (function () {
   'use strict'
-
-  // Obtener todos los formularios a los que queremos aplicar estilos de validación de Bootstrap personalizados
   var forms = document.querySelectorAll('.needs-validation')
-
-  // Bucle sobre ellos y evitar el envío
   Array.prototype.slice.call(forms)
     .forEach(function (form) {
       form.addEventListener('submit', function (event) {
+  
         if (!form.checkValidity()) {
-          event.preventDefault()
+          event.preventDefault() 
           event.stopPropagation()
         }
-
         form.classList.add('was-validated')
       }, false)
     })
