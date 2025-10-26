@@ -117,36 +117,45 @@
                                         </thead>
                                         <tbody>
                                             <% 
-                                            Productos producto = new Productos();
-                                            DefaultTableModel tabla = new DefaultTableModel();
-                                            tabla = producto.leer();
-                                            for(int t=0;t<tabla.getRowCount();t++){
-                                                out.println("<tr data-id="+ tabla.getValueAt(t, 0) +" data-img="+ tabla.getValueAt(t, 4) +" >");
-                                 
-                                                out.println("<td>"+ tabla.getValueAt(t, 1) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 2) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 3) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 5) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 6) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 7) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 8) +"</td>");
-                                                out.println("<td class='text-center'>");
-                                                out.println("  <div class='btn-group' role='group' aria-label='Acciones'>");
-                                                out.println("  <button type='button' class='btn btn-primary btn-sm'>");
-                                                out.println("    <i class='fas fa-eye'></i>");
-                                                out.println("  </button>");
-                                                out.println("  <button type='button' class='btn btn-warning btn-sm'>");
-                                                out.println("    <i class='fas fa-edit'></i>");
-                                                out.println("  </button>");
-                                                out.println("  <button type='button' class='btn btn-danger btn-sm'>");
-                                                out.println("    <i class='fas fa-trash'></i>");
-                                                out.println("  </button>");
-                                                out.println("  </div>");
-                                                out.println("</td>");
-                                                out.println("</tr>");    
-                                             }
-                        
-                                             %>
+                                                Productos producto = new Productos();
+                                                DefaultTableModel tabla = new DefaultTableModel();
+                                                tabla = producto.leer();
+                                                for(int t=0; t<tabla.getRowCount(); t++){
+                                                    out.println("<tr data-id='"+ tabla.getValueAt(t, 0) +"' " +
+                                                                "data-producto='"+ tabla.getValueAt(t, 1) +"' " +
+                                                                "data-marca='"+ tabla.getValueAt(t, 2) +"' " +
+                                                                "data-descripcion='"+ tabla.getValueAt(t, 3) +"' " +
+                                                                "data-img='"+ tabla.getValueAt(t, 4) +"' " +
+                                                                "data-costo='"+ tabla.getValueAt(t, 5) +"' " +
+                                                                "data-venta='"+ tabla.getValueAt(t, 6) +"' " +
+                                                                "data-stock='"+ tabla.getValueAt(t, 7) +"' " +
+                                                                "data-ingreso='"+ tabla.getValueAt(t, 8) +"'>");
+                                                    
+
+                                                    out.println("<td>"+ tabla.getValueAt(t, 1) +"</td>");
+                                                    out.println("<td>"+ tabla.getValueAt(t, 2) +"</td>");
+                                                    out.println("<td>"+ tabla.getValueAt(t, 3) +"</td>");
+                                                    out.println("<td>"+ tabla.getValueAt(t, 5) +"</td>");
+                                                    out.println("<td>"+ tabla.getValueAt(t, 6) +"</td>");
+                                                    out.println("<td>"+ tabla.getValueAt(t, 7) +"</td>");
+                                                    out.println("<td>"+ tabla.getValueAt(t, 8) +"</td>");
+
+                                                    out.println("<td class='text-center'>");
+                                                    out.println("  <div class='btn-group' role='group' aria-label='Acciones'>");
+                                                    out.println("    <button type='button' class='btn btn-primary btn-sm btn-ver'>");
+                                                    out.println("      <i class='fas fa-eye'></i>");
+                                                    out.println("    </button>");
+                                                    out.println("    <button type='button' class='btn btn-warning btn-sm btn-editar'>");
+                                                    out.println("      <i class='fas fa-edit'></i>");
+                                                    out.println("    </button>");
+                                                    out.println("    <button type='button' class='btn btn-danger btn-sm btn-eliminar'>");
+                                                    out.println("      <i class='fas fa-trash'></i>");
+                                                    out.println("    </button>");
+                                                    out.println("  </div>");
+                                                    out.println("</td>");
+                                                    out.println("</tr>");    
+                                                }
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>
@@ -173,6 +182,8 @@
 
 <script>
     $(document).ready(function() {
+        
+        /*DataTable*/
         $('#tablaProductos').DataTable({
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
@@ -180,9 +191,46 @@
             "lengthMenu": [ [5, 10, 25, 50, 100], [5, 10, 25, 50, 100] ],
             "responsive": true
         });
-    });
+
+        
+        $('#tablaProductos tbody').on('click', '.btn-ver', function() {
+            var tr = $(this).closest('tr');
+            
+            
+            var producto = tr.data('producto');
+            var marca = tr.data('marca');
+            var descripcion = tr.data('descripcion');
+            var costo = tr.data('costo');
+            var venta = tr.data('venta');
+            var stock = tr.data('stock');
+            var ingreso = tr.data('ingreso');
+            var imagenUrl = tr.data('img');
+
+            
+            $('#verProductoNombre').text(producto);
+            $('#verProductoMarca').text(marca);
+            $('#verProductoDescripcion').text(descripcion);
+            $('#verProductoCosto').text(costo); 
+            $('#verProductoVenta').text(venta); 
+            $('#verProductoStock').text(stock);
+            $('#verProductoIngreso').text(ingreso);
+            
+            // Cargar la imagen
+            if (imagenUrl && imagenUrl !== 'null' && imagenUrl !== '') {
+                $('#imgVerProducto').attr('src', imagenUrl); 
+            } else {
+                $('#imgVerProducto').attr('src', 'https://placehold.co/300x300/EFEFEF/AAAAAA&text=Sin+Imagen');
+            }
+
+            
+            $('#modalVerProducto').modal('show');
+        });
+        
+    }); 
 </script>
+
 <!-- Llamada a los modals -->
 <jsp:include page="modalProductos.jsp" />
+<jsp:include page="modalVerProducto.jsp" />
 </body>
 </html>

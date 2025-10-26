@@ -3,7 +3,8 @@
     Created on : 16/10/2025, 10:36:12 p. m.
     Author     : guich
 --%>
-
+<%@page import="modelo.Puestos"%>
+<%@page import="javax.swing.table.DefaultTableModel" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -101,61 +102,43 @@
                         <button class="btn btn-primary mb-4" data-toggle="modal" data-target="#modalPuestos"><i class="fas fa-plus"></i> Nuevo Puesto</button>
 
                         <div class="row">
-                            
-                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                                <div class="card text-center h-100">
-                                    <div class="card-body d-flex flex-column">
-                                        <img src="https://cdn-icons-png.flaticon.com/512/4205/4205906.png" alt="Imagen del Puesto" class="puesto-img bg-light">
-                                        
-                                        <h5 class="card-title font-weight-bold">Gerente de Tienda</h5>
-                                        <div class="mt-auto"> <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <% 
+                                Puestos puesto = new Puestos();
+                                DefaultTableModel tabla = new DefaultTableModel();
+                                tabla = puesto.leer();
+                              
+                                for(int t=0; t < tabla.getRowCount(); t++){
+                                    String id_puesto = tabla.getValueAt(t, 0).toString();
+                                    String puestos = tabla.getValueAt(t, 1).toString();
+                                    String imagen = tabla.getValueAt(t, 2).toString();
 
-                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                                <div class="card text-center h-100">
-                                    <div class="card-body d-flex flex-column">
-                                        <img src="https://cdn-icons-png.flaticon.com/512/4459/4459384.png" alt="Imagen del Puesto" class="puesto-img bg-light">
-                                        
-                                        <h5 class="card-title font-weight-bold">Cajero/a</h5>
-                                        <div class="mt-auto">
-                                            <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    out.println("<div class='col-lg-3 col-md-4 col-sm-6 mb-4'>");
+                                    out.println("  <div class='card text-center h-100'>");
+                                    out.println("    <div class='card-body d-flex flex-column'>");
 
-                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                                <div class="card text-center h-100">
-                                    <div class="card-body d-flex flex-column">
-                                        <img src="https://cdn-icons-png.flaticon.com/512/1261/1261166.png" alt="Imagen del Puesto" class="puesto-img bg-light">
-                                        
-                                        <h5 class="card-title font-weight-bold">Bodeguero</h5>
-                                        <div class="mt-auto">
-                                            <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    // Imagen
+                                    out.println("      <img src='" + tabla.getValueAt(t, 2) + "' alt='Imagen de " + tabla.getValueAt(t, 1) + "' class='puesto-img bg-light'>");
+
+                                    // Nombre
+                                    out.println("      <h5 class='card-title font-weight-bold'>" + tabla.getValueAt(t, 1) + "</h5>");
+
+                                    // Botones
+                                    out.println("      <div class='mt-auto'>");
+                                    out.println("        <button type='button' class='btn btn-warning btn-sm btn-editar-puesto' data-id='" + tabla.getValueAt(t, 0) + "'>");
+                                    out.println("          <i class='fas fa-edit'></i>");
+                                    out.println("        </button>");
+                                    out.println("        <button type='button' class='btn btn-danger btn-sm btn-eliminar-puesto' data-id='" + tabla.getValueAt(t, 0) + "'>");
+                                    out.println("          <i class='fas fa-trash'></i>");
+                                    out.println("        </button>");
+                                    out.println("      </div>"); 
+
+                                    out.println("    </div>"); 
+                                    out.println("  </div>"); 
+                                    out.println("</div>"); 
+
+                                } 
+                            %>
                             
-                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                                <div class="card text-center h-100">
-                                    <div class="card-body d-flex flex-column">
-                                        <img src="https://cdn-icons-png.flaticon.com/512/291/291402.png" alt="Imagen del Puesto" class="puesto-img bg-light">
-                                        
-                                        <h5 class="card-title font-weight-bold">Personal de Limpieza</h5>
-                                        <div class="mt-auto">
-                                            <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
                     </div>

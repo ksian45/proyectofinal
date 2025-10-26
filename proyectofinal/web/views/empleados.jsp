@@ -3,7 +3,7 @@
     Created on : 16/10/2025, 8:43:33 p. m.
     Author     : guich
 --%>
-<%@page import="modelo.Empleados"%>
+<%@page import="modelo.Empleados"%> 
 <%@page import="javax.swing.table.DefaultTableModel" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
     <style>
         #tablaEmpleados th, #tablaEmpleados td {
@@ -54,7 +54,6 @@
         <div class="sidebar">
             <nav class="mt-2" style="flex-grow: 1;">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!--Aqui tenemos que poner los modulos dinamicos-->
                     </ul>
             </nav>
             <nav class="mt-auto mb-2">
@@ -98,7 +97,7 @@
                                 <h3 class="card-title">Gestión de Empleados</h3>
                             </div>
                             <div class="card-body">
-                                <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalEmpleados"><i class="fas fa-plus"></i> Nuevo Empleado</button>
+                                <button id="btn_nuevo" class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalEmpleados"><i class="fas fa-plus"></i> Nuevo Empleado</button>
                                 <div class="table-responsive">
                                     <table id="tablaEmpleados" class="table table-bordered table-striped">
                                         <thead>
@@ -117,35 +116,33 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <% 
-                                            Empleados empleado = new Empleados();
-                                            DefaultTableModel tabla = new DefaultTableModel();
-                                            tabla = empleado.leer();
-                                            for(int t=0;t<tabla.getRowCount();t++){
-                                                out.println("<tr data-id="+ tabla.getValueAt(t, 0) +" data-idp="+ tabla.getValueAt(t, 9) +" >");
-                                 
-                                                out.println("<td>"+ tabla.getValueAt(t, 1) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 2) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 3) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 4) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 5) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 6) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 7) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 8) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 10) +"</td>");
-                                                out.println("<td>"+ tabla.getValueAt(t, 11) +"</td>");
-                                                out.println("<td class='text-center'>");
-                                                out.println("  <button type='button' class='btn btn-warning btn-sm'>");
-                                                out.println("    <i class='fas fa-edit'></i>");
-                                                out.println("  </button>");
-                                                out.println("  <button type='button' class='btn btn-danger btn-sm'>");
-                                                out.println("    <i class='fas fa-trash'></i>");
-                                                out.println("  </button>");
-                                                out.println("</td>");
-                                                out.println("</tr>");    
-                                             }
-                        
-                                             %>
+                                            <%
+                                                try {
+                                                    Empleados empleado = new Empleados(); 
+                                                    DefaultTableModel tabla = empleado.leer();
+                                                    for(int t=0; t<tabla.getRowCount(); t++){
+                                                     
+                                                     
+                                                        out.println("<tr data-id='"+ tabla.getValueAt(t, 0) +"' data-idp='"+ tabla.getValueAt(t, 9) +"'>");
+
+                                                        out.println("<td>"+ tabla.getValueAt(t, 1) +"</td>"); 
+                                                        out.println("<td>"+ tabla.getValueAt(t, 2) +"</td>"); 
+                                                        out.println("<td>"+ tabla.getValueAt(t, 3) +"</td>"); 
+                                                        out.println("<td>"+ tabla.getValueAt(t, 4) +"</td>"); 
+                                                        out.println("<td>"+ tabla.getValueAt(t, 5) +"</td>"); 
+                                                        out.println("<td>"+ tabla.getValueAt(t, 6) +"</td>"); 
+                                                        out.println("<td>"+ tabla.getValueAt(t, 7) +"</td>"); 
+                                                        out.println("<td>"+ tabla.getValueAt(t, 8) +"</td>"); 
+                                                        out.println("<td>"+ tabla.getValueAt(t, 10) +"</td>"); 
+                                                        out.println("<td>"+ tabla.getValueAt(t, 11) +"</td>"); 
+                                                        out.println("<td class='text-center'><div class='btn-group' role='group' aria-label='Acciones'><button type='button' class='btn btn-warning btn-sm btn-editar' data-id='"+ tabla.getValueAt(t, 0) +"'><i class='fas fa-edit'></i></button><button type='button' class='btn btn-danger btn-sm btn-eliminar' data-id='"+ tabla.getValueAt(t, 0) +"'><i class='fas fa-trash'></i></button></div></td>");
+                                                        out.println("</tr>");
+                                                    }
+                                                } catch (Exception e) {
+                                                    out.println("<tr><td colspan='11' class='text-center text-danger'>Error al cargar datos: " + e.getMessage() + "</td></tr>");
+                                                    e.printStackTrace();
+                                                }
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>
@@ -161,27 +158,157 @@
         <strong>Copyright &copy; 2025 <a href="#">Mi Empresa</a>.</strong> Todos los derechos reservados.
         <div class="float-right d-none d-sm-inline-block"><b>Versión</b> 1.0</div>
     </footer>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</div><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
-
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<%
+    String mensajeTipo = (String) session.getAttribute("mensajeTipo");
+    String mensajeTexto = (String) session.getAttribute("mensajeTexto");
+    String jsMensajeTipo = null;
+    String jsMensajeTexto = null;
+    if (mensajeTipo != null && mensajeTexto != null) {
+        jsMensajeTipo = mensajeTipo;
+        jsMensajeTexto = mensajeTexto;
+        session.removeAttribute("mensajeTipo");
+        session.removeAttribute("mensajeTexto");
+    }
+%>
 <script>
-    $(document).ready(function() {
-        $('#tablaEmpleados').DataTable({
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
-            },
-            "lengthMenu": [ [5, 10, 25, 50, 100], [5, 10, 25, 50, 100] ],
-            "responsive": true
+$(document).ready(function() {
+    
+    // 1. Inicializar DataTables
+    $('#tablaEmpleados').DataTable({
+        "language": { "url": "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json" },
+        "lengthMenu": [ [5, 10, 25, 50, 100], [5, 10, 25, 50, 100] ],
+        "responsive": true
+    });
+
+    // 2. SweetAlert // MOSTRAR MENSAJE
+    var mensajeTipo = "<%= jsMensajeTipo %>";
+    var mensajeTexto = "<%= jsMensajeTexto %>";
+    if (mensajeTipo && mensajeTipo !== "null" && mensajeTexto && mensajeTexto !== "null") {
+        var tituloAlerta = (mensajeTipo === 'success') ? '¡Éxito!' : 'Error';
+        Swal.fire({
+            icon: mensajeTipo,
+            title: tituloAlerta,
+            text: mensajeTexto,
+            confirmButtonText: 'Aceptar'
+        });
+    }
+
+    // 3. LÓGICA DEL MODAL (Nuevo y Editar)
+    
+    $('#modalEmpleados').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var form = $('#formEmpleados'); 
+        form.removeClass('was-validated');
+
+        if (button.attr('id') === 'btn_nuevo') {
+            // --- MODO CREAR --- // CREAR (LIMPIAR)
+            form[0].reset(); 
+            $('#id_empleado').val('0');
+            $('#accion').val('crear');
+            $('#modalEmpleadosLabel').text('Nuevo Empleado');
+            $('#btnGuardar').text('Guardar');
+        }
+    });
+
+    $('#tablaEmpleados tbody').on('click', '.btn-editar', function() {
+        // --- MODO EDITAR --- // EDITAR (RELLENAR)
+        var fila = $(this).closest('tr');
+        
+        //Leer datos
+        var id_empleado = fila.data('id');
+        var id_puesto = fila.data('idp');
+        var nombres = fila.find('td:eq(0)').text();
+        var apellidos = fila.find('td:eq(1)').text();
+        var direccion = fila.find('td:eq(2)').text();
+        var telefono = fila.find('td:eq(3)').text();
+        var dpi = fila.find('td:eq(4)').text();
+        var genero_texto = fila.find('td:eq(5)').text();
+        var fecha_nac = fila.find('td:eq(6)').text();
+        var fecha_labores = fila.find('td:eq(8)').text();
+        
+        //Poner datos
+        $('#id_empleado').val(id_empleado);
+        $('#accion').val('modificar');
+        $('#nombres').val(nombres);
+        $('#apellidos').val(apellidos);
+        $('#direccion').val(direccion);
+        $('#telefono').val(telefono);
+        $('#dpi').val(dpi);
+        
+        var genero_val = genero_texto.trim() === 'Masculino' ? '0' : '1';
+        $('#genero').val(genero_val);
+        
+        $('#fechaNacimiento').val(fecha_nac);
+        $('#fechaInicioLabores').val(fecha_labores);
+        $('#puesto').val(id_puesto);
+        
+        //Textos modal
+        $('#modalEmpleadosLabel').text('Editar Empleado');
+        $('#btnGuardar').text('Actualizar');
+
+        //Mostrar modal
+        $('#modalEmpleados').modal('show'); 
+    });
+    
+   // LÓGICA BOTÓN ELIMINAR --- // ELIMINAR (CONFIRMAR)
+    $('#tablaEmpleados tbody').on('click', '.btn-eliminar', function() {
+        
+        //Leer ID
+        var id_empleado = $(this).data('id');
+        
+        //Confirmar
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡No podrás revertir esta acción!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, ¡eliminar!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            //Si confirma
+            if (result.isConfirmed) {
+                
+                //Formulario fantasma
+                var form = $('<form>', {
+                    'method': 'POST',
+                    'action': '<%= request.getContextPath() %>/sr_empleado'
+                }).hide();
+
+                //Campo ID
+                var idInput = $('<input>', {
+                    'type': 'hidden',
+                    'name': 'id_empleado',
+                    'value': id_empleado
+                });
+                
+                //Campo Acción
+                var accionInput = $('<input>', {
+                    'type': 'hidden',
+                    'name': 'accion',
+                    'value': 'eliminar'
+                });
+
+                //Enviar
+                form.append(idInput).append(accionInput);
+                $('body').append(form);
+                form.submit();
+            }
         });
     });
+
+}); 
 </script>
-<!-- Llamada a los modals -->
+
 <jsp:include page="modalEmpleados.jsp" />
+
 </body>
 </html>

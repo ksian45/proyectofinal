@@ -7,6 +7,7 @@ package modelo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -49,19 +50,20 @@ public class Puestos {
         this.imagen = imagen;
     }
     
-public DefaultTableModel leer(){
+    public DefaultTableModel leer(){
         DefaultTableModel tabla = new DefaultTableModel();
         try{
             cn = new Conexion();
             cn.abrir_conexion();
-            String query = "SELECT Puestos.id_puesto as id, puestos.puesto FROM db_supermercado.puestos;";
+            String query = "SELECT Puestos.id_puesto as id, puestos.puesto, puestos.imagen FROM db_supermercado.puestos;";
             ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
-            String encabezado[] = {"id","puesto"};
+            String encabezado[] = {"id","puesto", "imagen"};
             tabla.setColumnIdentifiers(encabezado);
-            String datos [] = new String[10];
+            String datos [] = new String[3];
             while (consulta.next()){
                 datos[0] = consulta.getString("id");
                 datos[1] = consulta.getString("puesto");
+                datos[2] = consulta.getString("imagen");
                 tabla.addRow(datos);
                 
             }
@@ -70,6 +72,24 @@ public DefaultTableModel leer(){
             System.out.println(ex.getMessage());
         }
         return tabla;
+    }
+    
+    public HashMap leer_puesto(){
+     HashMap<String,String> drop  = new HashMap(); // llave, valor
+     try{
+         cn  = new Conexion();
+         cn.abrir_conexion();
+         String query = "select id_puesto,puesto from puestos;";
+         ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
+                
+            while(consulta.next()){
+                drop.put(consulta.getString("id_puesto"), consulta.getString("puesto"));
+            }
+         cn.cerrar_conexion();
+     }catch(SQLException ex){
+       System.out.println("Error: " + ex.getMessage());
+     }
+     return drop;
     }
     
     public int agregar(){

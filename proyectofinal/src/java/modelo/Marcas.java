@@ -54,14 +54,15 @@ public Marcas(){}
         try{
             cn = new Conexion();
             cn.abrir_conexion();
-            String query = "SELECT marcas.id_marca as id, marcas.marca FROM db_supermercado.marcas;";
+            String query = "SELECT marcas.id_marca as id, marcas.marca, marcas.imagen FROM db_supermercado.marcas;";
             ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
-            String encabezado[] = {"id","marca"};
+            String encabezado[] = {"id","marca", "imagen"};
             tabla.setColumnIdentifiers(encabezado);
-            String datos [] = new String[10];
+            String datos [] = new String[3];
             while (consulta.next()){
                 datos[0] = consulta.getString("id");
                 datos[1] = consulta.getString("marca");
+                datos[2] = consulta.getString("imagen");
                 tabla.addRow(datos);
                 
             }
