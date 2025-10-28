@@ -10,7 +10,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
 
-            <form id="formEmpleados" class="needs-validation" novalidate>
+            <form action="<%= request.getContextPath() %>/sr_cliente" method="post" id="formClientes" class="needs-validation" novalidate>
                 
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalClientesLabel">Nuevo Cliente</h5>

@@ -5,7 +5,7 @@
 --%>
 <%@page import="modelo.Clientes"%>
 <%@page import="javax.swing.table.DefaultTableModel" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>t
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,9 +15,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
-
     <style>
         #tablaClientes th, #tablaClientes td {
             text-align: center;
@@ -130,12 +129,7 @@
                                                 out.println("<td>"+ tabla.getValueAt(t, 5) +"</td>");
                                                 out.println("<td>"+ tabla.getValueAt(t, 6) +"</td>");
                                                 out.println("<td>"+ tabla.getValueAt(t, 7) +"</td>");
-                                                out.println("<td class='text-center'>");
-                                                out.println("  <button type='button' class='btn btn-warning btn-sm'>");
-                                                out.println("    <i class='fas fa-edit'></i>");
-                                                out.println("  </button>");
-                                                out.println("  <button type='button' class='btn btn-danger btn-sm'>");
-                                                out.println("    <i class='fas fa-trash'></i>");
+                                                out.println("<td class='text-center'><div class='btn-group' role='group' aria-label='Acciones'><button type='button' class='btn btn-warning btn-sm btn-editar' data-id='"+ tabla.getValueAt(t, 0) +"'><i class='fas fa-edit'></i></button><button type='button' class='btn btn-danger btn-sm btn-eliminar' data-id='"+ tabla.getValueAt(t, 0) +"'><i class='fas fa-trash'></i></button></div></td>");
                                                 out.println("  </button>");
                                                 out.println("</td>");
                                                 out.println("</tr>");    
@@ -162,20 +156,144 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+
+<%
+    String mensajeTipo = (String) session.getAttribute("mensajeTipo");
+    String mensajeTexto = (String) session.getAttribute("mensajeTexto");
+    String jsMensajeTipo = null;
+    String jsMensajeTexto = null;
+    if (mensajeTipo != null && mensajeTexto != null) {
+        jsMensajeTipo = mensajeTipo;
+        jsMensajeTexto = mensajeTexto;
+        session.removeAttribute("mensajeTipo");
+        session.removeAttribute("mensajeTexto");
+    }
+%>
 
 <script>
     $(document).ready(function() {
         $('#tablaClientes').DataTable({
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
-            },
+            "language": {"url": "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"},
             "lengthMenu": [ [5, 10, 25, 50, 100], [5, 10, 25, 50, 100] ],
             "responsive": true
         });
     });
+    
+    // 2. SweetAlert // MOSTRAR MENSAJE
+    var mensajeTipo = "<%= jsMensajeTipo %>";
+    var mensajeTexto = "<%= jsMensajeTexto %>";
+    if (mensajeTipo && mensajeTipo !== "null" && mensajeTexto && mensajeTexto !== "null") {
+        var tituloAlerta = (mensajeTipo === 'success') ? '¡Éxito!' : 'Error';
+        Swal.fire({
+            icon: mensajeTipo,
+            title: tituloAlerta,
+            text: mensajeTexto,
+            confirmButtonText: 'Aceptar'
+        });
+    }
+
+    // 3. LÓGICA DEL MODAL (Nuevo y Editar)
+    
+    $('#modalClientes').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var form = $('#formClientes'); 
+        form.removeClass('was-validated');
+
+        if (button.attr('id') === 'btn_nuevo') {
+            // --- MODO CREAR --- // CREAR (LIMPIAR)
+            form[0].reset(); 
+            $('#id_cliente').val('0');
+            $('#accion').val('crear');
+            $('#modalClientesLabel').text('Nuevo Cliente');
+            $('#btnGuardar').text('Guardar');
+        }
+    });
+
+    $('#tablaClientes tbody').on('click', '.btn-editar', function() {
+        // --- MODO EDITAR --- // EDITAR (RELLENAR)
+        var fila = $(this).closest('tr');
+        
+        //Leer datos
+        var id_cliente = fila.data('id');
+        var nombres = fila.find('td:eq(0)').text();
+        var apellidos = fila.find('td:eq(1)').text();
+        var nit = fila.find('td:eq(2)').text();
+        var genero_texto = fila.find('td:eq(3)').text();
+        var telefono = fila.find('td:eq(4)').text();
+        var correo_electronico = fila.find('td:eq(5)').text();
+        
+        //Poner datos
+        $('#id_cliente').val(id_cliente);
+        $('#accion').val('modificar');
+        $('#nombres').val(nombres);
+        $('#apellidos').val(apellidos);
+        $('#nit').val(nit);
+        
+        var genero_val = genero_texto.trim() === 'Masculino' ? '0' : '1';
+        $('#genero').val(genero_val);
+        
+        $('#telefono').val(telefono);
+        $('#correo_electronico').val(correo_electronico);
+        
+        //Textos modal
+        $('#modalClientesLabel').text('Editar Cliente');
+        $('#btnGuardar').text('Actualizar');
+
+        //Mostrar modal
+        $('#modalClientes').modal('show'); 
+    });
+    
+   // LÓGICA BOTÓN ELIMINAR --- // ELIMINAR (CONFIRMAR)
+    $('#tablaClientes tbody').on('click', '.btn-eliminar', function() {
+        
+        //Leer ID
+        var id_cliente = $(this).data('id');
+        
+        //Confirmar
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡No podrás revertir esta acción!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, ¡eliminar!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            //Si confirma
+            if (result.isConfirmed) {
+                
+                //Formulario fantasma
+                var form = $('<form>', {
+                    'method': 'POST',
+                    'action': '<%= request.getContextPath() %>/sr_cliente'
+                }).hide();
+
+                //Campo ID
+                var idInput = $('<input>', {
+                    'type': 'hidden',
+                    'name': 'id_cliente',
+                    'value': id_cliente
+                });
+                
+                //Campo Acción
+                var accionInput = $('<input>', {
+                    'type': 'hidden',
+                    'name': 'accion',
+                    'value': 'eliminar'
+                });
+
+                //Enviar
+                form.append(idInput).append(accionInput);
+                $('body').append(form);
+                form.submit();
+            }
+        });
+    });
+    
 </script>
 <!-- Llamada a los modals -->
 <jsp:include page="modalClientes.jsp" />
