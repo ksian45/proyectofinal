@@ -105,31 +105,31 @@ public class Clientes extends Persona{
         return retorno;
     }
     @Override
-    public int modificar() {
+    public int modificar(){
         int retorno = 0;
-        try {
+        try{
             cn = new Conexion();
             PreparedStatement parametro;
-            String query = "UPDATE db_supermercado.clientes SET nombres = ?, apellidos = ?, nit = ?, genero = ?, telefono = ?, correo_electronico = ? WHERE id_cliente = ?;";
+            String query="UPDATE db_supermercado.clientes SET nombres = ?, apellidos = ?, nit = ?, genero = ?, telefono = ?, correo_electronico = ?, fecha_ingreso = ? WHERE id_cliente = ?;";
             cn.abrir_conexion();
-            parametro = (PreparedStatement) cn.conexionBD.prepareStatement(query);
+            parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);
             parametro.setString(1, getNombres());
             parametro.setString(2, getApellidos());
             parametro.setString(3, getNit());
             parametro.setInt(4, getGenero());
             parametro.setString(5, getTelefono());
             parametro.setString(6, getCorreo_electronico());
-            parametro.setInt(7, getId());
-
+            parametro.setString(7, getFecha_ingreso());
+            parametro.setInt(8, getId());
+            
             retorno = parametro.executeUpdate();
             cn.cerrar_conexion();
-        } catch (SQLException ex) {
-            System.out.println("❌ Error en modificar(): " + ex.getMessage());
-            retorno = 0;
-        }
+        }catch(SQLException ex){
+             System.out.println(ex.getMessage());
+             retorno = 0;
+                }
         return retorno;
     }
-
     
     @Override
     public int eliminar(){

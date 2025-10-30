@@ -11,6 +11,17 @@ import java.sql.SQLException;
  * @author UMG
  */
 public class Conexion {
+
+    public static Connection getConexion() {
+    Conexion cn = new Conexion();
+    cn.abrir_conexion();
+    return cn.conexionBD;
+}
+
+    static Connection getConnection() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public Connection conexionBD;
     private final String puerto = "3306";
     private final String bd = "db_supermercado";
