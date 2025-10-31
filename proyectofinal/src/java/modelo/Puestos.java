@@ -79,7 +79,7 @@ public class Puestos {
      try{
          cn  = new Conexion();
          cn.abrir_conexion();
-         String query = "select id_puesto,puesto from puestos;";
+         String query = "select id_puesto ,puesto from puestos;";
          ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
                 
             while(consulta.next()){
