@@ -10,7 +10,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
-            <form id="formPuestos" class="needs-validation" novalidate enctype="multipart/form-data">
+            <form id="formPuestos" action="<%= request.getContextPath() %>/sr_puesto" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
                 
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalPuestosLabel">Nuevo Puesto</h5>
