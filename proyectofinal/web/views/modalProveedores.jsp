@@ -5,12 +5,14 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%-- No necesitas los imports de Marcas aquí, los quité --%>
 
 <div class="modal fade" id="modalProveedores" tabindex="-1" aria-labelledby="modalProveedoresLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
 
-            <form id="formProveedores" class="needs-validation" novalidate>
+            <%-- CORRECCIÓN: Añadido action y method al formulario --%>
+            <form id="formProveedores" action="<%= request.getContextPath() %>/sr_proveedor" method="POST" class="needs-validation" novalidate>
                 
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalProveedoresLabel">Nuevo Proveedor</h5>
@@ -59,7 +61,6 @@
                         </div>
                     </div>
 
-
                 </div>
                 
                 <div class="modal-footer">
@@ -75,7 +76,7 @@
 (function () {
   'use strict'
   
-  // --- Script de Validación de Bootstrap ---
+  // Script de Validación de Bootstrap
   var forms = document.querySelectorAll('#formProveedores.needs-validation');
   Array.prototype.slice.call(forms)
     .forEach(function (form) {
@@ -88,15 +89,15 @@
       }, false)
     });
   
-  // --- Limpiar el modal al cerrarse ---
+  // Limpiar el modal al cerrarse
   $('#modalProveedores').on('hidden.bs.modal', function () {
-      var form = $(this).find('form')[0];
-      form.classList.remove('was-validated');
-      form.reset();
-      
-      $('#id_proveedor').val('');
-      $('#accion').val('crear');
-      $('#modalProveedoresLabel').text('Nuevo Proveedor');
+     var form = $(this).find('form')[0];
+     form.classList.remove('was-validated');
+     form.reset();
+     
+     $('#id_proveedor').val('');
+     $('#accion').val('crear');
+     $('#modalProveedoresLabel').text('Nuevo Proveedor');
   });
   
 })()

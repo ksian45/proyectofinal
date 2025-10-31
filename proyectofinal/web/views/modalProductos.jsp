@@ -3,14 +3,15 @@
     Created on : 23/10/2025, 12:49:26 a. m.
     Author     : guich
 --%>
-
+<%@page import="modelo.Marcas" %>
+<%@page  import="java.util.HashMap" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <div class="modal fade" id="modalProductos" tabindex="-1" aria-labelledby="modalProductosLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
 
-            <form id="formProductos" class="needs-validation" novalidate enctype="multipart/form-data">
+            <form id="formProductos" action="<%= request.getContextPath() %>/sr_producto" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
                 
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalProductosLabel">Nuevo Producto</h5>
@@ -35,10 +36,14 @@
                         <div class="col-md-6 mb-3">
                             <label for="marca" class="form-label">Marca</label>
                             <select class="form-control" id="marca" name="marca" required>
-                                <option value="" selected disabled>Seleccione una marca...</option>
-                                <option value="1">Dos Pinos</option>
-                                <option value="2">Bimbo</option>
-                                <option value="3">Nescafé</option>
+                               <%
+                                    Marcas marca = new Marcas();
+                                    HashMap<String,String> drop = marca.leer_marca();
+                                    for(String i:drop.keySet()){
+                                      out.println("<option value='"+ i +"'>"+ drop.get(i)+"</option>");
+                                      }
+
+                                %>
                             </select>
                             <div class="invalid-feedback">
                                 Por favor, seleccione una marca.

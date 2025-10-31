@@ -4,42 +4,81 @@
     Author     : guich
 --%>
 
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
     <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { font-family: Arial; background: #f4f4f4; }
-        .login-container {
-            width: 300px; margin: 100px auto; padding: 20px;
-            background: #fff; border-radius: 5px; box-shadow: 0 0 10px #ccc;
+        body {
+            background: linear-gradient(135deg, #007BFF, #00BFFF);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
-        input[type="text"], input[type="password"] {
-            width: 100%; padding: 10px; margin: 10px 0;
+        .login-card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 380px;
         }
-        input[type="submit"] {
-            width: 100%; padding: 10px; background: #007BFF;
-            color: white; border: none; cursor: pointer;
+        .login-card h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: #333;
         }
-        .error { color: red; text-align: center; }
+        .btn-login {
+            background-color: #007BFF;
+            border: none;
+            transition: 0.3s;
+        }
+        .btn-login:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Iniciar Sesión</h2>
-        <form action="LoginServlet" method="post">
-            <input type="text" name="username" placeholder="Usuario" required />
-            <input type="password" name="password" placeholder="Contraseña" required />
-            <input type="submit" value="Entrar" />
-        </form>
-       
-        <%
-            String error = request.getParameter("error");
-            if (error != null) {
-        %>
-            <div class="error"><%= error %></div>
-        <% } %>
-    </div>
+
+<div class="login-card">
+    <h2>Iniciar Sesión</h2>
+    <form action="../LoginServlet" method="post">
+        <div class="mb-3">
+            <label for="username" class="form-label">Usuario</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Ingresa tu usuario" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+        </div>
+        <button type="submit" class="btn btn-login w-100 text-white">Entrar</button>
+    </form>
+
+    <% String error = request.getParameter("error");
+       if (error != null) { %>
+        <div class="error"><%= error %></div>
+    <% } %>
+
+    <c:if test="${param.mensaje == 'logout'}">
+        <div class="alert alert-info text-center mt-3">
+            Sesión cerrada correctamente.
+        </div>
+    </c:if>
+</div>
+
+<
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
