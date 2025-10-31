@@ -7,6 +7,7 @@ package modelo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -71,6 +72,24 @@ public Marcas(){}
             System.out.println(ex.getMessage());
         }
         return tabla;
+    }
+    
+    public HashMap leer_marca(){
+        HashMap<String,String> drop  = new HashMap(); // llave, valor
+        try{
+            cn  = new Conexion();
+            cn.abrir_conexion();
+            String query = "select id_marca,marca from marcas;";
+            ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
+
+               while(consulta.next()){
+                   drop.put(consulta.getString("id_marca"), consulta.getString("marca"));
+               }
+            cn.cerrar_conexion();
+        }catch(SQLException ex){
+          System.out.println("Error: " + ex.getMessage());
+        }
+        return drop;
     }
     
     public int agregar(){

@@ -3,10 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/src/java/modelo/Empleados.java</file>
-            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/modalEmpleados.jsp</file>
+            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/src/java/controlador/sr_producto.java</file>
+            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/modalProductos.jsp</file>
+            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/productos.jsp</file>
             <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/empleados.jsp</file>
             <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/src/java/controlador/sr_empleado.java</file>
+            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/web/views/modalEmpleados.jsp</file>
+            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/src/java/modelo/Marcas.java</file>
+            <file>file:/C:/Users/guich/OneDrive/Documentos/PROGRAMACION/CURSO%20PROGRAMACIÓN%20II/PROYECTO_FINAL_VENTAS/proyectofinal/proyectofinal/src/java/modelo/Productos.java</file>
         </group>
     </open-files>
 </project-private>
