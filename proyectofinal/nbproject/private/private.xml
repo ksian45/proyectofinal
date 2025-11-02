@@ -2,21 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/UMG/OneDrive%20-%20Universidad%20Mariano%20Gálvez/Escritorio/Correcion%20de%20proyecto/proyectofinal/proyectofinal/src/java/modelo/ReporteDTO.java</file>
-            <file>file:/C:/Users/UMG/OneDrive%20-%20Universidad%20Mariano%20Gálvez/Escritorio/Correcion%20de%20proyecto/proyectofinal/proyectofinal/src/java/modelo/Usuario.java</file>
-            <file>file:/C:/Users/UMG/OneDrive%20-%20Universidad%20Mariano%20Gálvez/Escritorio/Correcion%20de%20proyecto/proyectofinal/proyectofinal/src/java/modelo/UsuarioDAO.java</file>
-            <file>file:/C:/Users/UMG/OneDrive%20-%20Universidad%20Mariano%20Gálvez/Escritorio/Correcion%20de%20proyecto/proyectofinal/proyectofinal/src/java/servlets/CerrarSesionServlet.java</file>
-            <file>file:/C:/Users/UMG/OneDrive%20-%20Universidad%20Mariano%20Gálvez/Escritorio/Correcion%20de%20proyecto/proyectofinal/proyectofinal/src/java/servlets/CrearUsuarioServlet.java</file>
-            <file>file:/C:/Users/UMG/OneDrive%20-%20Universidad%20Mariano%20Gálvez/Escritorio/Correcion%20de%20proyecto/proyectofinal/proyectofinal/src/java/servlets/ReporteServlet.java</file>
-            <file>file:/C:/Users/UMG/OneDrive%20-%20Universidad%20Mariano%20Gálvez/Escritorio/Correcion%20de%20proyecto/proyectofinal/proyectofinal/src/java/servlets/LoginServlet.java</file>
-            <file>file:/C:/Users/UMG/OneDrive%20-%20Universidad%20Mariano%20Gálvez/Escritorio/Correcion%20de%20proyecto/proyectofinal/proyectofinal/src/java/modelo/Clientes.java</file>
-            <file>file:/C:/Users/UMG/OneDrive%20-%20Universidad%20Mariano%20Gálvez/Escritorio/Correcion%20de%20proyecto/proyectofinal/proyectofinal/web/views/modalClientes.jsp</file>
-            <file>file:/C:/Users/UMG/OneDrive%20-%20Universidad%20Mariano%20Gálvez/Escritorio/Correcion%20de%20proyecto/proyectofinal/proyectofinal/src/java/controlador/sr_puesto.java</file>
-            <file>file:/C:/Users/UMG/OneDrive%20-%20Universidad%20Mariano%20Gálvez/Escritorio/Correcion%20de%20proyecto/proyectofinal/proyectofinal/web/views/modalPuestos.jsp</file>
-            <file>file:/C:/Users/UMG/OneDrive%20-%20Universidad%20Mariano%20Gálvez/Escritorio/Correcion%20de%20proyecto/proyectofinal/proyectofinal/web/views/puestos.jsp</file>
-            <file>file:/C:/Users/UMG/OneDrive%20-%20Universidad%20Mariano%20Gálvez/Escritorio/Correcion%20de%20proyecto/proyectofinal/proyectofinal/src/java/modelo/Puestos.java</file>
-            <file>file:/C:/Users/UMG/OneDrive%20-%20Universidad%20Mariano%20Gálvez/Escritorio/Correcion%20de%20proyecto/proyectofinal/proyectofinal/src/java/modelo/Proveedores.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

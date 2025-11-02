@@ -33,24 +33,21 @@
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link font-weight-bold">MI EMPRESA</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="home" class="nav-link">Inicio</a>
-            </li>
+            
+           
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#" role="button"><i class="fas fa-user-circle"></i> Mi Perfil</a>
+                 <a href="<%= request.getContextPath() %>/index.jsp" class="nav-link">
+                          <i class="fas fa-home"></i>
+                          <p>Menu Principal</p>
+                   </a>
             </li>
         </ul>
     </nav>
 
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <a href="#" class="brand-link">
-            <span class="brand-text font-weight-light">Panel Admin</span>
-        </a>
+        
         <div class="sidebar">
             <nav class="mt-2" style="flex-grow: 1;">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -60,13 +57,10 @@
                 <ul class="nav nav-pills nav-sidebar flex-column">
                     <li class="nav-item"><hr class="bg-secondary mx-2 my-1"></li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-user-cog"></i>
-                            <p>
-                                Perfil
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
+                         <a href="<%= request.getContextPath() %>/index.jsp" class="nav-link">
+                          <i class="fas fa-home"></i>
+                          <p>Menu Principal</p>
+                          </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="url_configuracion" class="nav-link">

@@ -9,7 +9,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Reportes del Sistema</title>
+    <title>Reportes  </title>
 
     <!-- Bootstrap y Chart.js -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -23,12 +23,7 @@
             font-family: 'Segoe UI', sans-serif;
             min-height: 100vh;
         }
-
-        .container {
-            margin-top: 60px;
-            max-width: 1100px;
-        }
-
+        .container { margin-top: 60px; max-width: 1100px; }
         .card {
             border: none;
             border-radius: 20px;
@@ -36,40 +31,24 @@
             background-color: #fff;
             overflow: hidden;
         }
-
-        h2 {
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
+        h2 { font-weight: 600; letter-spacing: 0.5px; }
         .btn-primary {
             background: linear-gradient(90deg, #007BFF, #0056d2);
             border: none;
             border-radius: 10px;
             transition: all 0.3s ease-in-out;
         }
-
         .btn-primary:hover {
             transform: scale(1.03);
             box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
         }
-
-        .btn-success {
-            border-radius: 10px;
-        }
-
+        .btn-success { border-radius: 10px; }
         .table thead {
             background: linear-gradient(90deg, #007BFF, #00a2ff);
             color: white;
             font-weight: 600;
         }
-
-        .chart-container {
-            position: relative;
-            height: 400px;
-            width: 100%;
-        }
-
+        .chart-container { position: relative; height: 400px; width: 100%; }
         footer {
             margin-top: 40px;
             text-align: center;
@@ -82,7 +61,19 @@
 
 <div class="container">
     <div class="card p-5" id="contenidoReporte">
-        <h2 class="text-center text-primary mb-4">📊  Reportes</h2>
+        <%
+            String tipo = request.getParameter("tipoReporte");
+            String icono = "fas fa-chart-bar";
+            if ("ventas".equals(tipo)) icono = "fas fa-shopping-cart";
+            else if ("compras".equals(tipo)) icono = "fas fa-truck-loading";
+            else if ("inventario".equals(tipo)) icono = "fas fa-boxes";
+            else if ("producto".equals(tipo)) icono = "fas fa-tags";
+        %>
+
+        <h2 class="text-center text-primary mb-2">
+            <i class="<%= icono %>"></i> Reporte de <%= tipo != null ? tipo.substring(0,1).toUpperCase() + tipo.substring(1) : "Sistema" %>
+        </h2>
+        <p class="text-center text-muted">Generado el <%= new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()) %></p>
 
         <!-- Formulario -->
         <form method="post" action="<%= request.getContextPath() %>/reporte" class="text-center mb-4">
@@ -92,6 +83,7 @@
                         <option value="" disabled selected>Selecciona un tipo de reporte</option>
                         <option value="ventas">Ventas</option>
                         <option value="compras">Compras</option>
+                        <option value="producto">Producto</option>
                     </select>
                     <button type="submit" class="btn btn-primary w-100">Generar Reporte</button>
                 </div>
@@ -117,8 +109,11 @@
             <table class="table table-bordered table-hover text-center align-middle">
                 <thead>
                     <tr>
-                        <% for (String col : columnas) { %>
-                            <th><%= col %></th>
+                        <% for (String col : columnas) {
+                            String titulo = col.replace("_", " ");
+                            titulo = titulo.substring(0,1).toUpperCase() + titulo.substring(1);
+                        %>
+                            <th><%= titulo %></th>
                         <% } %>
                     </tr>
                 </thead>
@@ -141,22 +136,24 @@
 
         <!-- Botón de descarga PDF -->
         <div class="text-center mt-4">
-            <button id="btnDescargar" class="btn btn-success">
-                📥 Descargar PDF
-            </button>
+            <button id="btnDescargar" class="btn btn-success">📥 Descargar PDF</button>
+        </div>
+
+        
+        <div class="text-center mt-3">
+            <a href="<%= request.getContextPath() %>/index.jsp" class="btn btn-outline-primary">⬅ Volver al Menú Principal</a>
         </div>
 
         <script>
             const labels = [];
             const valores = [];
 
-            <% 
-                for (List<String> fila : filas) {
-                    String etiqueta = fila.get(0);
-                    String valor = "0";
-                    for (String item : fila) {
-                        if (item.matches("\\d+(\\.\\d+)?")) { valor = item; break; }
-                    }
+            <% for (List<String> fila : filas) {
+                String etiqueta = fila.get(0);
+                String valor = "0";
+                for (String item : fila) {
+                    if (item.matches("\\d+(\\.\\d+)?")) { valor = item; break; }
+                }
             %>
                 labels.push("<%= etiqueta %>");
                 valores.push(<%= valor %>);
@@ -188,7 +185,6 @@
                 }
             });
 
-            // Descargar PDF
             document.getElementById("btnDescargar").addEventListener("click", async () => {
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF('p', 'mm', 'a4');
@@ -221,13 +217,8 @@
             <div class="alert alert-warning text-center">No hay datos disponibles para este reporte.</div>
         <% } %>
     </div>
-
-    <footer class="mt-5">
-        <p>© 2025 Sistema de Reportes </p>
-    </footer>
 </div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
