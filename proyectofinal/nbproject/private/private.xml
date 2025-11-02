@@ -3,13 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Aproyecto_final_prueba_errores/proyectofinal/proyectofinal/web/views/clientes.jsp</file>
-            <file>file:/D:/Aproyecto_final_prueba_errores/proyectofinal/proyectofinal/web/views/marcas.jsp</file>
-            <file>file:/D:/Aproyecto_final_prueba_errores/proyectofinal/proyectofinal/web/views/modalMarcas.jsp</file>
-            <file>file:/D:/Aproyecto_final_prueba_errores/proyectofinal/proyectofinal/web/views/modalClientes.jsp</file>
-            <file>file:/D:/Aproyecto_final_prueba_errores/proyectofinal/proyectofinal/src/java/controlador/sr_marca.java</file>
-            <file>file:/D:/Aproyecto_final_prueba_errores/proyectofinal/proyectofinal/src/java/controlador/sr_cliente.java</file>
-            <file>file:/D:/Aproyecto_final_prueba_errores/proyectofinal/proyectofinal/src/java/modelo/Marcas.java</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/src/java/controlador/ReporteServlet.java</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/src/java/filters/AuthFilter.java</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/src/java/modelo/JWTUtil.java</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/src/java/modelo/UsuarioDAO.java</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/src/java/modelo/Conexion.java</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/src/java/controlador/LoginServlet.java</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/src/java/controlador/CerrarSesionServlet.java</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/src/java/controlador/CrearUsuarioServlet.java</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/src/java/controlador/sr_cliente.java</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/src/java/controlador/sr_empleado.java</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/src/java/controlador/sr_marca.java</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/src/java/modelo/Usuario.java</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/src/java/modelo/ReporteDTO.java</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Jruiz/Desktop/Proyecto%20Progra/proyectofinal/nbproject/build-impl.xml</file>
         </group>
     </open-files>
 </project-private>
