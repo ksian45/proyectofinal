@@ -4,13 +4,16 @@
  */
 package controlador;
 
-import modelo.Marcas;
+// --- IMPORTS ---
+import modelo.Productos;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,14 +23,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
-@WebServlet(name = "sr_marca", urlPatterns = {"/sr_marca"})
+@WebServlet(name = "sr_producto", urlPatterns = {"/sr_producto"})
 @MultipartConfig
-public class sr_marca extends HttpServlet {
+public class sr_producto extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("views/marcas.jsp");
+        response.sendRedirect("views/productos.jsp"); // Asegúrate que esta ruta sea correcta
     }
 
     @Override
@@ -36,67 +39,90 @@ public class sr_marca extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
-        Marcas marca = new Marcas();
+        Productos producto = new Productos();
 
         String mensajeTipo = "error";
         String mensajeTexto = "Ocurrió un error al procesar la solicitud.";
 
         try {
             String accion = request.getParameter("accion");
-            String idMarcaStr = request.getParameter("id_marca");
+            String idProductoStr = request.getParameter("id_producto");
 
             if ("eliminar".equals(accion)) {
-                // LÓGICA ELIMINAR (FÍSICO)
-                marca.setId_marca(Integer.parseInt(idMarcaStr));
-                if (marca.eliminar() > 0) {
+                // --- LÓGICA DE CAMBIAR ESTADO ---
+                producto.setId_producto(Integer.parseInt(idProductoStr));
+
+                // --- CORREGIDO AQUÍ ---
+                // Se llama al nuevo método cambiarEstado()
+                if (producto.cambiarEstado() > 0) { 
                     mensajeTipo = "success";
-                    mensajeTexto = "¡Marca eliminada exitosamente!";
+                    // Mensaje actualizado
+                    mensajeTexto = "¡Estado del producto cambiado exitosamente!";
                 } else {
-                    mensajeTipo = "error";
-                    mensajeTexto = "Error al eliminar la marca. Es posible que esté en uso en la tabla 'Productos'.";
+                    mensajeTexto = "Error al cambiar el estado del producto.";
                 }
 
             } else if ("crear".equals(accion) || "modificar".equals(accion)) {
-                // LÓGICA CREAR / MODIFICAR
-                String nombre = request.getParameter("marca");
-                marca.setMarca(nombre);
+
+                // --- LÓGICA DE CREAR Y MODIFICAR ---
+
+                String nombre = request.getParameter("producto");
+                String idMarcaStr = request.getParameter("marca");
+                String descripcion = request.getParameter("descripcion");
+                String costoStr = request.getParameter("precio_costo");
+                String ventaStr = request.getParameter("precio_venta");
+                String stockStr = request.getParameter("stock");
+
+                producto.setProducto(nombre);
+                producto.setId_marca(Integer.parseInt(idMarcaStr));
+                producto.setDescripcion(descripcion);
+                producto.setPrecio_costo(Float.parseFloat(costoStr));
+                producto.setPrecio_venta(Float.parseFloat(ventaStr));
+                producto.setExistencia(Integer.parseInt(stockStr));
 
                 // Manejo de la imagen
-                Part filePart = request.getPart("imagenMarca");
+                Part filePart = request.getPart("imagen");
                 String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
                 String nombreImagenDB = null;
 
                 if (fileName != null && !fileName.isEmpty()) {
                     // SI SE SUBIÓ UNA NUEVA IMAGEN
                     String extension = fileName.substring(fileName.lastIndexOf("."));
-                    nombreImagenDB = "marca_" + System.currentTimeMillis() + extension;
-                    
+                    nombreImagenDB = "producto_" + System.currentTimeMillis() + extension;
                     String uploadPath = getServletContext().getRealPath("/public/images/");
                     Path uploadDir = Paths.get(uploadPath);
                     if (!Files.exists(uploadDir)) { Files.createDirectories(uploadDir); }
-                    
                     try (InputStream input = filePart.getInputStream()) {
                         Path filePath = uploadDir.resolve(nombreImagenDB);
                         Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
                     }
-                    marca.setImagen(nombreImagenDB);
+                    producto.setImagen(nombreImagenDB);
+
+                } else if ("modificar".equals(accion)) {
+                    // SI ES MODIFICAR y NO se subió imagen nueva
+                    producto.setImagen(null); // La clase Productos.java sabrá no actualizarla
                 }
 
                 // Ejecutar la acción
                 if ("crear".equals(accion)) {
-                    if (marca.agregar() > 0) {
+                    String fechaIngreso = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    producto.setFecha_ingreso(fechaIngreso);
+
+                    if (producto.agregar() > 0) {
                         mensajeTipo = "success";
-                        mensajeTexto = "¡Marca creada exitosamente!";
+                        mensajeTexto = "¡Producto creado exitosamente!";
                     } else {
-                        mensajeTexto = "Error al crear la marca.";
+                        mensajeTexto = "Error al crear el producto.";
                     }
+
                 } else { // "modificar"
-                    marca.setId_marca(Integer.parseInt(idMarcaStr));
-                    if (marca.modificar() > 0) {
+                    producto.setId_producto(Integer.parseInt(idProductoStr));
+
+                    if (producto.modificar() > 0) {
                         mensajeTipo = "success";
-                        mensajeTexto = "¡Marca actualizada exitosamente!";
+                        mensajeTexto = "¡Producto actualizado exitosamente!";
                     } else {
-                        mensajeTexto = "Error al actualizar la marca.";
+                        mensajeTexto = "Error al actualizar el producto.";
                     }
                 }
             } else {
@@ -110,11 +136,13 @@ public class sr_marca extends HttpServlet {
 
         session.setAttribute("mensajeTipo", mensajeTipo);
         session.setAttribute("mensajeTexto", mensajeTexto);
-        response.sendRedirect("views/marcas.jsp");
+        response.sendRedirect("views/productos.jsp"); // Redirige de vuelta
     }
 
     @Override
     public String getServletInfo() {
-        return "Servlet para CRUD de Marcas con subida de imagen";
+        // Descripción actualizada
+        return "Servlet para CRUD de Productos";
     }
+
 }

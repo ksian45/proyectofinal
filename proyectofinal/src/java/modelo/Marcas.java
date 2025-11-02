@@ -7,6 +7,9 @@ package modelo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class Marcas {
@@ -14,165 +17,132 @@ public class Marcas {
     private String marca, imagen;
     private Conexion cn;
 
-    public Marcas() {}
-
+    public Marcas(){}
     public Marcas(int id_marca, String marca, String imagen) {
         this.id_marca = id_marca;
         this.marca = marca;
         this.imagen = imagen;
     }
 
-    // Getters y Setters
-    public int getId_marca() {
-        return id_marca;
-    }
+    public int getId_marca() { return id_marca; }
+    public void setId_marca(int id_marca) { this.id_marca = id_marca; }
+    public String getMarca() { return marca; }
+    public void setMarca(String marca) { this.marca = marca; }
+    public String getImagen() { return imagen; }
+    public void setImagen(String imagen) { this.imagen = imagen; }
 
-    public void setId_marca(int id_marca) {
-        this.id_marca = id_marca;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public String getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
-
-    // =============================
-    // MÉTODOS CRUD
-    // =============================
-
-    public DefaultTableModel leer() {
+    
+    public DefaultTableModel leer(){
         DefaultTableModel tabla = new DefaultTableModel();
-        try {
+        try{
             cn = new Conexion();
             cn.abrir_conexion();
-
-            String query = "SELECT id_marca AS id, marca, imagen FROM db_supermercado.marcas;";
+            String query = "SELECT id_marca, marca, imagen FROM marcas;";
             ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
-
             String encabezado[] = {"id", "marca", "imagen"};
             tabla.setColumnIdentifiers(encabezado);
             String datos[] = new String[3];
-
-            while (consulta.next()) {
-                datos[0] = consulta.getString("id");
+            while (consulta.next()){
+                datos[0] = consulta.getString("id_marca");
                 datos[1] = consulta.getString("marca");
                 datos[2] = consulta.getString("imagen");
                 tabla.addRow(datos);
             }
-
             cn.cerrar_conexion();
-        } catch (SQLException ex) {
-            System.out.println("Error al leer marcas: " + ex.getMessage());
+        }catch(SQLException ex){
+            System.out.println("(leer marcas): " + ex.getMessage());
         }
         return tabla;
     }
 
-    public int agregar() {
-        int retorno = 0;
-        try {
+    public HashMap leer_marca(){
+        HashMap<String,String> drop = new HashMap();
+        try{
             cn = new Conexion();
             cn.abrir_conexion();
-
-            String query = "INSERT INTO db_supermercado.marcas (marca, imagen) VALUES (?, ?);";
-            PreparedStatement parametro = cn.conexionBD.prepareStatement(query);
-
+            // Asumiendo que Marcas NO tiene 'estado'
+            String query = "select id_marca,marca from marcas;";
+            ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
+            while(consulta.next()){
+                drop.put(consulta.getString("id_marca"), consulta.getString("marca"));
+            }
+            cn.cerrar_conexion();
+        }catch(SQLException ex){
+            System.out.println("Error: " + ex.getMessage());
+        }
+        return drop;
+    }
+    
+    public int agregar(){
+        int retorno = 0;
+        try{
+            cn = new Conexion();
+            PreparedStatement parametro;
+            // Asumimos id_marca es AUTO_INCREMENT
+            String query="INSERT INTO marcas (marca, imagen) VALUES (?,?);";
+            cn.abrir_conexion();
+            parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);
             parametro.setString(1, getMarca());
             parametro.setString(2, getImagen());
-
             retorno = parametro.executeUpdate();
             cn.cerrar_conexion();
-        } catch (SQLException ex) {
-            System.out.println("Error al agregar marca: " + ex.getMessage());
-            retorno = 0;
+        }catch(SQLException ex){
+             System.out.println("(agregar marca): " + ex.getMessage());
+             retorno = 0;
         }
         return retorno;
     }
-
-    public int modificar() {
-    int retorno = 0;
-    try {
-        cn = new Conexion();
-        cn.abrir_conexion();
-
-        String query;
-        PreparedStatement parametro;
-
-        // Si la imagen no es nula ni vacía, actualizamos también la columna imagen
-        if (getImagen() != null && !getImagen().isEmpty()) {
-            query = "UPDATE db_supermercado.marcas SET marca = ?, imagen = ? WHERE id_marca = ?;";
-            parametro = cn.conexionBD.prepareStatement(query);
-            parametro.setString(1, getMarca());
-            parametro.setString(2, getImagen());
-            parametro.setInt(3, getId_marca());
-        } else {
-            // Si la imagen es nula o vacía, solo actualizamos la marca
-            query = "UPDATE db_supermercado.marcas SET marca = ? WHERE id_marca = ?;";
-            parametro = cn.conexionBD.prepareStatement(query);
-            parametro.setString(1, getMarca());
-            parametro.setInt(2, getId_marca());
-        }
-
-        retorno = parametro.executeUpdate();
-        cn.cerrar_conexion();
-    } catch (SQLException ex) {
-        System.out.println("Error al modificar marca: " + ex.getMessage());
-        retorno = 0;
-    }
-    return retorno;
-}
-
-
-    public int eliminar() {
+    
+    public int modificar(){
         int retorno = 0;
-        try {
+        try{
             cn = new Conexion();
             cn.abrir_conexion();
+            PreparedStatement parametro;
 
-            String query = "DELETE FROM db_supermercado.marcas WHERE id_marca = ?;";
-            PreparedStatement parametro = cn.conexionBD.prepareStatement(query);
+            List<String> setClauses = new ArrayList<>();
+            List<Object> params = new ArrayList<>();
 
-            parametro.setInt(1, getId_marca());
-            retorno = parametro.executeUpdate();
-
-            cn.cerrar_conexion();
-        } catch (SQLException ex) {
-            System.out.println("Error al eliminar marca: " + ex.getMessage());
-            retorno = 0;
-        }
-        return retorno;
-    }
-
-    public String obtener_imagen(int idMarca) {
-        String imagenActual = null;
-        try {
-            cn = new Conexion();
-            cn.abrir_conexion();
-
-            String query = "SELECT imagen FROM db_supermercado.marcas WHERE id_marca = ?;";
-            PreparedStatement parametro = cn.conexionBD.prepareStatement(query);
-            parametro.setInt(1, idMarca);
-            ResultSet rs = parametro.executeQuery();
-
-            if (rs.next()) {
-                imagenActual = rs.getString("imagen");
+            setClauses.add("marca = ?"); params.add(getMarca());
+            
+            if (getImagen() != null && !getImagen().isEmpty()) {
+                setClauses.add("imagen = ?");
+                params.add(getImagen());
             }
 
+            String query = "UPDATE marcas SET " + String.join(", ", setClauses) + " WHERE id_marca = ?;";
+            parametro = cn.conexionBD.prepareStatement(query);
+
+            int i = 1;
+            for (Object p : params) {
+                parametro.setObject(i++, p);
+            }
+            parametro.setInt(i, getId_marca()); // ID para el WHERE
+
+            retorno = parametro.executeUpdate();
             cn.cerrar_conexion();
-        } catch (SQLException ex) {
-            System.out.println("Error al obtener imagen actual: " + ex.getMessage());
+        } catch(SQLException ex) {
+            System.out.println("(modificar marca): " + ex.getMessage());
+            retorno = 0;
         }
-        return imagenActual;
+        return retorno;
+    }
+    
+    public int eliminar(){ // Borrado Físico
+        int retorno = 0;
+        try{
+            cn = new Conexion();
+            PreparedStatement parametro;
+            String query="delete from marcas where id_marca = ?;";
+            cn.abrir_conexion();
+            parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);
+            parametro.setInt(1, getId_marca());
+            retorno = parametro.executeUpdate();
+            cn.cerrar_conexion();
+        }catch(SQLException ex){
+             System.out.println("(eliminar marca): " + ex.getMessage());
+             retorno = 0;
+        }
+        return retorno;
     }
 }
-

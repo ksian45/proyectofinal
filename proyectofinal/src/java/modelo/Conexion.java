@@ -16,7 +16,21 @@ import java.sql.SQLException;
  */
 public class Conexion {
 
+<<<<<<< HEAD
     // Parámetros de conexión
+=======
+    public static Connection getConexion() {
+    Conexion cn = new Conexion();
+    cn.abrir_conexion();
+    return cn.conexionBD;
+}
+
+    static Connection getConnection() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Connection conexionBD;
+>>>>>>> f099bf896b677b5d1fd688be79f497de7796f6c4
     private final String puerto = "3306";
     private final String bd = "db_supermercado";
     private final String urlConexion = String.format(
