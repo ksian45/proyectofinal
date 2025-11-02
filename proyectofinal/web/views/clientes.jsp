@@ -183,68 +183,68 @@
     });
     
     // 2. SweetAlert // MOSTRAR MENSAJE
-    var mensajeTipo = "<%= jsMensajeTipo %>";
-    var mensajeTexto = "<%= jsMensajeTexto %>";
-    if (mensajeTipo && mensajeTipo !== "null" && mensajeTexto && mensajeTexto !== "null") {
-        var tituloAlerta = (mensajeTipo === 'success') ? '¡Éxito!' : 'Error';
-        Swal.fire({
-            icon: mensajeTipo,
-            title: tituloAlerta,
-            text: mensajeTexto,
-            confirmButtonText: 'Aceptar'
-        });
-    }
+    var mensajeTipo = "<%= jsMensajeTipo %>";
+    var mensajeTexto = "<%= jsMensajeTexto %>";
+    if (mensajeTipo && mensajeTipo !== "null" && mensajeTexto && mensajeTexto !== "null") {
+        var tituloAlerta = (mensajeTipo === 'success') ? '¡Éxito!' : 'Error';
+        Swal.fire({
+            icon: mensajeTipo,
+            title: tituloAlerta,
+            text: mensajeTexto,
+            confirmButtonText: 'Aceptar'
+        });
+    }
 
-    // 3. LÓGICA DEL MODAL (Nuevo y Editar)
-    
-    $('#modalClientes').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var form = $('#formClientes'); 
-        form.removeClass('was-validated');
+    // 3. LÓGICA DEL MODAL (Nuevo y Editar)
+    
+    $('#modalClientes').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var form = $('#formClientes'); 
+        form.removeClass('was-validated');
 
-        if (button.attr('id') === 'btn_nuevo') {
-            // --- MODO CREAR --- // CREAR (LIMPIAR)
-            form[0].reset(); 
-            $('#id_cliente').val('0');
-            $('#accion').val('crear');
-            $('#modalClientesLabel').text('Nuevo Cliente');
-            $('#btnGuardar').text('Guardar');
-        }
-    });
+        if (button.attr('id') === 'btn_nuevo') {
+            // --- MODO CREAR --- // CREAR (LIMPIAR)
+            form[0].reset(); 
+            $('#id_cliente').val('0');
+            $('#accion').val('crear');
+            $('#modalClientesLabel').text('Nuevo Cliente');
+            $('#btnGuardar').text('Guardar');
+        }
+    });
 
-    $('#tablaClientes tbody').on('click', '.btn-editar', function() {
-        // --- MODO EDITAR --- // EDITAR (RELLENAR)
-        var fila = $(this).closest('tr');
-        
-        //Leer datos
-        var id_cliente = fila.data('id');
-        var nombres = fila.find('td:eq(0)').text();
-        var apellidos = fila.find('td:eq(1)').text();
-        var nit = fila.find('td:eq(2)').text();
-        var genero_texto = fila.find('td:eq(3)').text();
-        var telefono = fila.find('td:eq(4)').text();
-        var correo_electronico = fila.find('td:eq(5)').text();
-        
-        //Poner datos
-        $('#id_cliente').val(id_cliente);
-        $('#accion').val('modificar');
-        $('#nombres').val(nombres);
-        $('#apellidos').val(apellidos);
-        $('#nit').val(nit);
-        
-        var genero_val = genero_texto.trim() === 'Masculino' ? '0' : '1';
-        $('#genero').val(genero_val);
+    $('#tablaClientes tbody').on('click', '.btn-editar', function() {
+        // --- MODO EDITAR --- // EDITAR (RELLENAR)
+        var fila = $(this).closest('tr');
         
-        $('#telefono').val(telefono);
-        $('#correo_electronico').val(correo_electronico);
-        
-        //Textos modal
-        $('#modalClientesLabel').text('Editar Cliente');
-        $('#btnGuardar').text('Actualizar');
+        //Leer datos
+        var id_cliente = fila.data('id');
+        var nombres = fila.find('td:eq(0)').text();
+        var apellidos = fila.find('td:eq(1)').text();
+        var nit = fila.find('td:eq(2)').text();
+        var genero_texto = fila.find('td:eq(3)').text();
+        var telefono = fila.find('td:eq(4)').text();
+        var correo_electronico = fila.find('td:eq(5)').text();
+        
+        //Poner datos
+        $('#id_cliente').val(id_cliente);
+        $('#accion').val('modificar');
+        $('#nombres').val(nombres);
+        $('#apellidos').val(apellidos);
+        $('#nit').val(nit);
+        
+        var genero_val = genero_texto.trim() === 'Masculino' ? '0' : '1';
+        $('#genero').val(genero_val);
+        
+        $('#telefono').val(telefono);
+        $('#correo_electronico').val(correo_electronico);
+        
+        //Textos modal
+        $('#modalClientesLabel').text('Editar Cliente');
+        $('#btnGuardar').text('Actualizar');
 
-        //Mostrar modal
-        $('#modalClientes').modal('show'); 
-    });
+        //Mostrar modal
+        $('#modalClientes').modal('show'); 
+    });
     
    // LÓGICA BOTÓN ELIMINAR --- // ELIMINAR (CONFIRMAR)
     $('#tablaClientes tbody').on('click', '.btn-eliminar', function() {

@@ -4,7 +4,8 @@
  */
 package controlador;
 
-import modelo.Marcas;
+// --- IMPORTS ---
+import modelo.Puestos; 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -20,14 +21,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
-@WebServlet(name = "sr_marca", urlPatterns = {"/sr_marca"})
-@MultipartConfig
-public class sr_marca extends HttpServlet {
+@WebServlet(name = "sr_puesto", urlPatterns = {"/sr_puesto"})
+@MultipartConfig // Habilita la subida de archivos
+public class sr_puesto extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("views/marcas.jsp");
+        // Redirige GET a la tabla
+        response.sendRedirect("views/puestos.jsp");
     }
 
     @Override
@@ -36,40 +38,42 @@ public class sr_marca extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
-        Marcas marca = new Marcas();
+        Puestos puesto = new Puestos();
 
         String mensajeTipo = "error";
         String mensajeTexto = "Ocurrió un error al procesar la solicitud.";
 
         try {
+            // Leemos acción e ID
             String accion = request.getParameter("accion");
-            String idMarcaStr = request.getParameter("id_marca");
+            String idPuestoStr = request.getParameter("id_puesto");
 
             if ("eliminar".equals(accion)) {
-                // LÓGICA ELIMINAR (FÍSICO)
-                marca.setId_marca(Integer.parseInt(idMarcaStr));
-                if (marca.eliminar() > 0) {
+                // --- LÓGICA ELIMINAR (FÍSICO) ---
+                puesto.setId_puesto(Integer.parseInt(idPuestoStr));
+                if (puesto.eliminar() > 0) {
                     mensajeTipo = "success";
-                    mensajeTexto = "¡Marca eliminada exitosamente!";
+                    mensajeTexto = "¡Puesto eliminado exitosamente!";
                 } else {
                     mensajeTipo = "error";
-                    mensajeTexto = "Error al eliminar la marca. Es posible que esté en uso en la tabla 'Productos'.";
+                    mensajeTexto = "Error al eliminar el puesto. Es posible que esté en uso en la tabla 'Empleados'.";
                 }
 
             } else if ("crear".equals(accion) || "modificar".equals(accion)) {
-                // LÓGICA CREAR / MODIFICAR
-                String nombre = request.getParameter("marca");
-                marca.setMarca(nombre);
+                // --- LÓGICA CREAR / MODIFICAR ---
+
+                String nombre = request.getParameter("puesto");
+                puesto.setPuesto(nombre);
 
                 // Manejo de la imagen
-                Part filePart = request.getPart("imagenMarca");
+                Part filePart = request.getPart("imagenPuesto"); // Asumo que el 'name' en el modal es "imagenPuesto"
                 String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
                 String nombreImagenDB = null;
 
                 if (fileName != null && !fileName.isEmpty()) {
                     // SI SE SUBIÓ UNA NUEVA IMAGEN
                     String extension = fileName.substring(fileName.lastIndexOf("."));
-                    nombreImagenDB = "marca_" + System.currentTimeMillis() + extension;
+                    nombreImagenDB = "puesto_" + System.currentTimeMillis() + extension;
                     
                     String uploadPath = getServletContext().getRealPath("/public/images/");
                     Path uploadDir = Paths.get(uploadPath);
@@ -79,24 +83,24 @@ public class sr_marca extends HttpServlet {
                         Path filePath = uploadDir.resolve(nombreImagenDB);
                         Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
                     }
-                    marca.setImagen(nombreImagenDB);
+                    puesto.setImagen(nombreImagenDB);
                 }
 
                 // Ejecutar la acción
                 if ("crear".equals(accion)) {
-                    if (marca.agregar() > 0) {
+                    if (puesto.agregar() > 0) {
                         mensajeTipo = "success";
-                        mensajeTexto = "¡Marca creada exitosamente!";
+                        mensajeTexto = "¡Puesto creado exitosamente!";
                     } else {
-                        mensajeTexto = "Error al crear la marca.";
+                        mensajeTexto = "Error al crear el puesto.";
                     }
                 } else { // "modificar"
-                    marca.setId_marca(Integer.parseInt(idMarcaStr));
-                    if (marca.modificar() > 0) {
+                    puesto.setId_puesto(Integer.parseInt(idPuestoStr));
+                    if (puesto.modificar() > 0) {
                         mensajeTipo = "success";
-                        mensajeTexto = "¡Marca actualizada exitosamente!";
+                        mensajeTexto = "¡Puesto actualizado exitosamente!";
                     } else {
-                        mensajeTexto = "Error al actualizar la marca.";
+                        mensajeTexto = "Error al actualizar el puesto.";
                     }
                 }
             } else {
@@ -110,13 +114,11 @@ public class sr_marca extends HttpServlet {
 
         session.setAttribute("mensajeTipo", mensajeTipo);
         session.setAttribute("mensajeTexto", mensajeTexto);
-        response.sendRedirect("views/marcas.jsp");
+        response.sendRedirect("views/puestos.jsp");
     }
 
     @Override
     public String getServletInfo() {
-        return "Servlet para CRUD de Marcas con subida de imagen";
+        return "Servlet para CRUD de Puestos";
     }
 }
-
-

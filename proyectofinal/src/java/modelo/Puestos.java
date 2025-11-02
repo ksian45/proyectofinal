@@ -7,7 +7,9 @@ package modelo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -55,6 +57,7 @@ public class Puestos {
         try{
             cn = new Conexion();
             cn.abrir_conexion();
+            // Tu query de leer está bien
             String query = "SELECT Puestos.id_puesto as id, puestos.puesto, puestos.imagen FROM db_supermercado.puestos;";
             ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
             String encabezado[] = {"id","puesto", "imagen"};
@@ -75,21 +78,22 @@ public class Puestos {
     }
     
     public HashMap leer_puesto(){
-     HashMap<String,String> drop  = new HashMap(); // llave, valor
-     try{
-         cn  = new Conexion();
-         cn.abrir_conexion();
-         String query = "select id_puesto ,puesto from puestos;";
-         ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
-                
-            while(consulta.next()){
-                drop.put(consulta.getString("id_puesto"), consulta.getString("puesto"));
-            }
-         cn.cerrar_conexion();
-     }catch(SQLException ex){
-       System.out.println("Error: " + ex.getMessage());
-     }
-     return drop;
+       HashMap<String,String> drop  = new HashMap();
+       try{
+           cn  = new Conexion();
+           cn.abrir_conexion();
+           // Asumimos que no hay 'estado' en puestos, si lo hay, añade WHERE estado = 1
+           String query = "select id_puesto ,puesto from puestos;";
+           ResultSet consulta = cn.conexionBD.createStatement().executeQuery(query);
+            
+           while(consulta.next()){
+               drop.put(consulta.getString("id_puesto"), consulta.getString("puesto"));
+           }
+           cn.cerrar_conexion();
+       }catch(SQLException ex){
+           System.out.println("Error: " + ex.getMessage());
+       }
+       return drop;
     }
     
     public int agregar(){
@@ -97,18 +101,20 @@ public class Puestos {
         try{
             cn = new Conexion();
             PreparedStatement parametro;
-            String query="INSERT INTO db_supermercado.puestos (id_puesto, puesto) VALUES (?,?);";
+            // CORREGIDO: Asumimos id_puesto es AUTO_INCREMENT. Se añade la columna 'imagen'.
+            String query="INSERT INTO db_supermercado.puestos (puesto, imagen) VALUES (?,?);";
             cn.abrir_conexion();
             parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);
-            parametro.setInt(1, getId_puesto());
-            parametro.setString(2, getPuesto());
+            // Los parámetros ahora son 1 y 2
+            parametro.setString(1, getPuesto());
+            parametro.setString(2, getImagen());
             
             retorno = parametro.executeUpdate();
             cn.cerrar_conexion();
         }catch(SQLException ex){
-             System.out.println(ex.getMessage());
+             System.out.println("Error agregar() puestos: " + ex.getMessage());
              retorno = 0;
-                }
+        }
         return retorno;
     }
     
@@ -116,18 +122,40 @@ public class Puestos {
         int retorno = 0;
         try{
             cn = new Conexion();
-            PreparedStatement parametro;
-            String query="UPDATE db_supermercado.puestos SET id_puesto = ?, puesto = ? WHERE id_puesto = ?;";
             cn.abrir_conexion();
-            parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);
-            parametro.setInt(1, getId_puesto());
-            parametro.setString(2, getPuesto());
+            PreparedStatement parametro;
+
+            // Lógica dinámica para modificar la imagen solo si se envía una nueva
+            List<String> setClauses = new ArrayList<>();
+            List<Object> params = new ArrayList<>();
+
+            setClauses.add("puesto = ?"); params.add(getPuesto());
+            
+            // Solo añade 'imagen' al UPDATE si el servlet le pasó un nuevo nombre
+            if (getImagen() != null && !getImagen().isEmpty()) {
+                setClauses.add("imagen = ?");
+                params.add(getImagen());
+            }
+
+            // Construye la query
+            String query = "UPDATE db_supermercado.puestos SET " + String.join(", ", setClauses) + " WHERE id_puesto = ?;";
+            
+            parametro = cn.conexionBD.prepareStatement(query);
+
+            // Asigna los parámetros dinámicamente
+            int i = 1;
+            for (Object p : params) {
+                parametro.setObject(i++, p);
+            }
+            // Asigna el ID para el WHERE
+            parametro.setInt(i, getId_puesto()); 
+            
             retorno = parametro.executeUpdate();
             cn.cerrar_conexion();
         }catch(SQLException ex){
-             System.out.println(ex.getMessage());
+             System.out.println("Error modificar() puestos: " + ex.getMessage());
              retorno = 0;
-                }
+        }
         return retorno;
     }
     
@@ -138,15 +166,14 @@ public class Puestos {
             PreparedStatement parametro;
             String query="delete from puestos where id_puesto = ?;";
             cn.abrir_conexion();
-            parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);            
+            parametro = (PreparedStatement)cn.conexionBD.prepareStatement(query);        
             parametro.setInt(1, getId_puesto());
             retorno = parametro.executeUpdate();
             cn.cerrar_conexion();
         }catch(SQLException ex){
-             System.out.println(ex.getMessage());
+             System.out.println("Error eliminar() puestos: " + ex.getMessage());
              retorno = 0;
-                }
+        }
         return retorno;
     }
-
 }
